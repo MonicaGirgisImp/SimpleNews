@@ -1,0 +1,146 @@
+//
+//  Countries.swift
+//  SimpleNews
+//
+//  Created by Monica Girgis Kamel on 08/01/2022.
+//
+
+import Foundation
+
+enum Countries: String, CaseIterable{
+    case UnitedStates
+    case UnitedArabEmirates
+    case Argentina
+    case Algeria
+    case Austria
+    case Australia
+    case Belgium
+    case Bulgaria
+    case Brazil
+    case Canada
+    case Switzerland
+    case China
+    case Colombia
+    case Cuba
+    case Germany
+    case Egypt
+    case France
+    case UnitedKingdom
+    case Greece
+    case HongKong
+    case Indonesia
+    case Iraq
+    case India
+    case Italy
+    case Japan
+    case Korea
+    case Morocco
+    case Mexico
+    case Malaysia
+    case Nigeria
+    case Netherlands
+    case Norway
+    case NewZealand
+    case Philippines
+    case Portugal
+    case Romania
+    case Russia
+    case SaudiArabia
+    case Sweden
+    case Thailand
+    case Turkey
+    case Venezuela
+    case SouthAfrica
+    
+    
+    var code: String{
+        switch self{
+        case .UnitedStates:
+            return "us"
+        case .UnitedArabEmirates:
+            return "ae"
+        case .Argentina:
+            return "ar"
+        case .Algeria:
+            return "dz"
+        case .Austria:
+            return "at"
+        case .Australia:
+            return "au"
+        case .Belgium:
+            return "be"
+        case .Bulgaria:
+            return "bg"
+        case .Brazil:
+            return "br"
+        case .Canada:
+            return "ca"
+        case .Switzerland:
+            return "ch"
+        case .China:
+            return "cn"
+        case .Colombia:
+            return "co"
+        case .Cuba:
+            return "cu"
+        case .Germany:
+            return "de"
+        case .Egypt:
+            return "eg"
+        case .France:
+            return "fr"
+        case .UnitedKingdom:
+            return "gb"
+        case .Greece:
+            return "gr"
+        case .HongKong:
+            return "hk"
+        case .Indonesia:
+            return "id"
+        case .Iraq:
+            return "ie"
+        case .India:
+            return "in"
+        case .Italy:
+            return "it"
+        case .Japan:
+            return "jp"
+        case .Korea:
+            return "kr"
+        case .Morocco:
+            return "ma"
+        case .Mexico:
+            return "mx"
+        case .Malaysia:
+            return "my"
+        case .Nigeria:
+            return "ng"
+        case .Netherlands:
+            return "nl"
+        case .Norway:
+            return "no"
+        case .NewZealand:
+            return "nz"
+        case .Philippines:
+            return "ph"
+        case .Portugal:
+            return "pt"
+        case .Romania:
+            return "ro"
+        case .Russia:
+            return "ru"
+        case .SaudiArabia:
+            return "sa"
+        case .Sweden:
+            return "se"
+        case .Thailand:
+            return "th"
+        case .Turkey:
+            return "tr"
+        case .Venezuela:
+            return "ve"
+        case .SouthAfrica:
+            return "za"
+        }
+    }
+}

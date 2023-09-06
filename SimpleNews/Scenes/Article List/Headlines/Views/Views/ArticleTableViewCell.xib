@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="163" id="KGk-i7-Jjw" customClass="ArticleTableViewCell" customModule="SimpleNews" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="498" height="163"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="498" height="163"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gaz-at-CCi">
+                        <rect key="frame" x="8" y="8" width="144" height="144"/>
+                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                        <color key="tintColor" systemColor="systemGreenColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="Gaz-at-CCi" secondAttribute="height" multiplier="1:1" id="5Wx-TA-6JY"/>
+                            <constraint firstAttribute="height" constant="144" id="s4u-BB-hYv"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yAD-kQ-arb">
+                        <rect key="frame" x="168" y="8" width="322" height="93"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="en0-aa-f7A">
+                        <rect key="frame" x="168" y="135" width="267.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" systemColor="systemGray3Color"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kkf-Fq-cvX">
+                        <rect key="frame" x="168" y="101" width="44" height="31"/>
+                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="csi-7A-5T5">
+                        <rect key="frame" x="176" y="140" width="306" height="87"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RsW-iU-R6e">
+                        <rect key="frame" x="443.5" y="105.5" width="46.5" height="46.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="RsW-iU-R6e" secondAttribute="height" multiplier="1:1" id="5cl-54-QUz"/>
+                        </constraints>
+                        <color key="tintColor" systemColor="systemGreenColor"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" image="bookmark" catalog="system"/>
+                        <connections>
+                            <action selector="saveLaterAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="e66-xg-YPy"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="csi-7A-5T5" firstAttribute="top" secondItem="Kkf-Fq-cvX" secondAttribute="bottom" constant="8" id="1IE-2i-li1"/>
+                    <constraint firstItem="yAD-kQ-arb" firstAttribute="leading" secondItem="Gaz-at-CCi" secondAttribute="trailing" constant="16" id="23n-vQ-VRx"/>
+                    <constraint firstItem="yAD-kQ-arb" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.3" id="9Ks-bd-EQH"/>
+                    <constraint firstItem="yAD-kQ-arb" firstAttribute="top" secondItem="Gaz-at-CCi" secondAttribute="top" id="G5y-88-kjx"/>
+                    <constraint firstItem="csi-7A-5T5" firstAttribute="leading" secondItem="yAD-kQ-arb" secondAttribute="leading" constant="8" id="HoH-VP-Iff"/>
+                    <constraint firstItem="RsW-iU-R6e" firstAttribute="leading" secondItem="en0-aa-f7A" secondAttribute="trailing" constant="8" id="Idb-Nn-SgD"/>
+                    <constraint firstItem="Gaz-at-CCi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Jlw-HD-0fZ"/>
+                    <constraint firstItem="RsW-iU-R6e" firstAttribute="bottom" secondItem="Gaz-at-CCi" secondAttribute="bottom" id="LLu-6d-Bzq"/>
+                    <constraint firstItem="csi-7A-5T5" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.28" id="NiQ-bI-lL9"/>
+                    <constraint firstAttribute="trailing" secondItem="yAD-kQ-arb" secondAttribute="trailing" constant="8" id="RVJ-Dn-vjl"/>
+                    <constraint firstItem="csi-7A-5T5" firstAttribute="trailing" secondItem="yAD-kQ-arb" secondAttribute="trailing" constant="-8" id="Vle-cl-kCR"/>
+                    <constraint firstItem="en0-aa-f7A" firstAttribute="bottom" secondItem="Gaz-at-CCi" secondAttribute="bottom" id="Vxy-Ag-sf4"/>
+                    <constraint firstItem="Kkf-Fq-cvX" firstAttribute="leading" secondItem="yAD-kQ-arb" secondAttribute="leading" id="bPP-UI-3zK"/>
+                    <constraint firstItem="en0-aa-f7A" firstAttribute="leading" secondItem="yAD-kQ-arb" secondAttribute="leading" id="jof-13-37B"/>
+                    <constraint firstItem="RsW-iU-R6e" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.15" id="luf-wP-VVO"/>
+                    <constraint firstItem="Kkf-Fq-cvX" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.1" id="nJj-do-3jB"/>
+                    <constraint firstItem="RsW-iU-R6e" firstAttribute="trailing" secondItem="yAD-kQ-arb" secondAttribute="trailing" id="tBT-gP-5n3"/>
+                    <constraint firstItem="Gaz-at-CCi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="uNT-fp-uLy"/>
+                    <constraint firstAttribute="bottom" secondItem="Gaz-at-CCi" secondAttribute="bottom" constant="8" id="yVP-xF-rg8"/>
+                    <constraint firstItem="Kkf-Fq-cvX" firstAttribute="top" secondItem="yAD-kQ-arb" secondAttribute="bottom" id="ziU-d1-JjW"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="articleImageView" destination="Gaz-at-CCi" id="HyB-pb-aaB"/>
+                <outlet property="datePostedLabel" destination="en0-aa-f7A" id="vUq-sS-cgA"/>
+                <outlet property="descriptionLabel" destination="csi-7A-5T5" id="qd8-Fs-GLk"/>
+                <outlet property="headLineLabel" destination="yAD-kQ-arb" id="qCK-la-jGS"/>
+                <outlet property="newsPaperLabel" destination="Kkf-Fq-cvX" id="eKW-Iz-Bww"/>
+                <outlet property="saveLaterButton" destination="RsW-iU-R6e" id="XFc-hs-pRu"/>
+            </connections>
+            <point key="canvasLocation" x="123.18840579710145" y="148.99553571428569"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="bookmark" catalog="system" width="110" height="128"/>
+        <systemColor name="systemGray3Color">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
