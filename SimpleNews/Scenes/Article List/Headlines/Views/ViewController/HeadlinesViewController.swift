@@ -22,10 +22,6 @@ class HeadlinesViewController: UIViewController {
         setupUI()
         viewModel = HeadlinesViewModel(headlineRepo: HeadlineDataRepo())
         viewModel.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         viewModel.handleRepo()
     }
     

@@ -27,15 +27,39 @@ class HeadlinesViewModel {
         self.headlineRepo = headlineRepo
     }
     
+    private func getCashedData(completion: (([Article])->())? ) {
+        let articlesDB = CasheManager.shared.getCashedObjects(ArticleDB.self)
+        var articles: [Article] = []
+        articlesDB.forEach { articleDB in
+            articles.append( Article(category: articleDB.category,
+                                     source: Source(id: articleDB.source?.id, name: articleDB.source?.name),
+                                     author: articleDB.author,
+                                     title: articleDB.title,
+                                     articleDescription: articleDB.articleDescription,
+                                     url: articleDB.url,
+                                     urlToImage: articleDB.urlToImage,
+                                     publishedAt: articleDB.publishedAt,
+                                     date: articleDB.date,
+                                     content: articleDB.content,
+                                     isSaved: articleDB.isSaved))
+        }
+        completion?(articles)
+    }
     
     func handleRepo(completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
         guard let country = country else { return}
         dispatchGroup = DispatchGroup()
-        delegate?.loaderIsHidden(false)
+//        delegate?.loaderIsHidden(false)
+        tempArticles = []
+        getCashedData { [weak self] data in
+            guard let self = self else { return }
+            tempArticles = data
+            settingUpDataSource()
+        }
         tempArticles = []
         categories?.forEach({ category in
             dispatchGroup.enter()
-            headlineRepo.fetchData(page: page, pageSize: pageSize, country: country, category: category) { [weak self] response in
+            headlineRepo.fetchArticles(page: page, pageSize: pageSize, country: country, category: category) { [weak self] response in
                 completion?(response)
                 guard let self = self else { return}
                 switch response{
@@ -45,14 +69,13 @@ class HeadlinesViewModel {
                         tempData[i].category = category
                     }
                     tempArticles.append(contentsOf: tempData)
-                    headlineRepo.casheArticles(articles: tempData)
+                    casheArticles(articles: tempData)
                 case .failure(let error):
                     delegate?.failedWithError(error.localizedDescription)
                 }
                 dispatchGroup.leave()
             }
         })
-        
         handleDispatchGroupNotification()
     }
     
@@ -70,26 +93,40 @@ class HeadlinesViewModel {
         }
     }
     
+    private func settingUpDataSource() {
+        if page == 1 {
+            articlesData.articles = tempArticles
+            delegate?.autoUpdateView()
+        }else{
+            let initialIndex = articlesData.articles.count - 1
+            articlesData.articles.append(contentsOf: tempArticles)
+            let endIndex = articlesData.articles.count - 1
+            delegate?.insertNewRows(initialIndex, endIndex, 0)
+        }
+    }
+    
     private func handleDispatchGroupNotification() {
         dispatchGroup.notify(queue: .main){ [weak self] in
             guard let self = self else { return }
             orderByDate()
             delegate?.loaderIsHidden(true)
-            
-            if page == 1 {
-                articlesData.articles = tempArticles
-                delegate?.autoUpdateView()
-            }else{
-                let initialIndex = articlesData.articles.count - 1
-                articlesData.articles.append(contentsOf: tempArticles)
-                let endIndex = articlesData.articles.count - 1
-                delegate?.insertNewRows(initialIndex, endIndex, 0)
-            }
+            settingUpDataSource()
         }
     }
     
+    private func casheArticles(articles: [Article]) {
+        var articlesDB = articles.map({ ArticleDB(category: $0.category, source: $0.source, author: $0.author, title: $0.title, articleDescription: $0.articleDescription, url: $0.url, urlToImage: $0.urlToImage, publishedAt: $0.publishedAt, date: $0.date, content: $0.content, isSaved: $0.isSaved) })
+        
+        let cashedData = CasheManager.shared.getCashedObjects(ArticleDB.self)
+        cashedData.forEach { articleDB in
+            articlesDB.removeAll(where: { $0.url == articleDB.url })
+        }
+        
+        CasheManager.shared.casheObjects(articlesDB)
+    }
+    
     private func deleteCashedArticles() {
-        headlineRepo.removeAllCashedArticles()
+        CasheManager.shared.deleteObjects(ArticleDB.self)
     }
     
     func getNextPage() {
@@ -134,6 +171,10 @@ class HeadlinesViewModel {
     
     func addArticleToBookmarks(at index: Int) {
         articlesData.articles[index].isSaved = !(articlesData.articles[index].isSaved ?? false)
-        headlineRepo.updateCashedObject(primaryKey: articlesData.articles[index].url)
+        if let url = articlesData.articles[index].url {
+            CasheManager.shared.updateCashedObj(ArticleDB.self, with: url) { objc in
+                objc.isSaved = !objc.isSaved
+            }
+        }
     }
 }
