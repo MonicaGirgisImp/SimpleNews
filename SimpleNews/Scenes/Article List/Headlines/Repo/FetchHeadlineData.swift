@@ -6,12 +6,8 @@
 //
 
 import Foundation
-import Realm
-import RealmSwift
 
-class HeadlineDataRepo {
-    
-    let realm = try! Realm()
+class HeadlineDataRepo: HeadlineRepoProtocol {
     
     func fetchArticles(page: Int, pageSize: Int, country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>)->())?){
         APIRoute.shared.fetchRequest(clientRequest: .GetData(country: country,category: category, page: page, pageSize: pageSize), decodingModel: APIResponse<[Article]>.self) {  response in
@@ -19,8 +15,8 @@ class HeadlineDataRepo {
         }
     }
     
-    private func getCashedData(completion: (([Article])->())? ) {
-        let articlesDB = realm.objects(ArticleDB.self)
+    func getCashedData(completion: (([Article])->())? ) {
+        let articlesDB = CasheManager.shared.getCashedObjects(ArticleDB.self)
         var articles: [Article] = []
         articlesDB.forEach { articleDB in
             articles.append( Article(category: articleDB.category,
@@ -57,37 +53,25 @@ class HeadlineDataRepo {
     }
     
     func casheArticles(articles: [Article]) {
-        do {
-            var articlesDB = articles.map({ ArticleDB(category: $0.category, source: $0.source, author: $0.author, title: $0.title, articleDescription: $0.articleDescription, url: $0.url, urlToImage: $0.urlToImage, publishedAt: $0.publishedAt, date: $0.date, content: $0.content, isSaved: $0.isSaved) })
-            
-            let cashedData = realm.objects(ArticleDB.self)
-            cashedData.forEach { articleDB in
-                articlesDB.removeAll(where: { $0.url == articleDB.url })
-            }
-            
-            
-            try realm.write({
-                realm.add(articlesDB)
-            })
-        }catch let err{
-            print(err.localizedDescription)
+        var articlesDB = articles.map({ ArticleDB(category: $0.category, source: $0.source, author: $0.author, title: $0.title, articleDescription: $0.articleDescription, url: $0.url, urlToImage: $0.urlToImage, publishedAt: $0.publishedAt, date: $0.date, content: $0.content, isSaved: $0.isSaved) })
+        
+        let cashedData = CasheManager.shared.getCashedObjects(ArticleDB.self)
+        cashedData.forEach { articleDB in
+            articlesDB.removeAll(where: { $0.url == articleDB.url })
         }
+        
+        CasheManager.shared.casheObjects(articlesDB)
     }
     
     func removeAllCashedArticles() {
-        realm.beginWrite()
-        let cashedData = realm.objects(ArticleDB.self)
-        guard !cashedData.isEmpty else { return }
-        realm.delete(cashedData)
-        try! realm.commitWrite()
+        CasheManager.shared.deleteObjects(ArticleDB.self)
     }
     
     func updateCashedObject(primaryKey: String?) {
-        let article = realm.objects(ArticleDB.self).where {
-            $0.url == primaryKey
-        }.first!
-        try! realm.write {
-            article.isSaved = !article.isSaved
+        if let primaryKey = primaryKey {
+            CasheManager.shared.updateCashedObj(ArticleDB.self, with: primaryKey) { objc in
+                objc.isSaved = !objc.isSaved
+            }
         }
     }
 }

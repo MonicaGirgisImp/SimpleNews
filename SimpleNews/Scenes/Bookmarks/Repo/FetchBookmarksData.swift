@@ -6,15 +6,11 @@
 //
 
 import Foundation
-import Realm
-import RealmSwift
 
-class FetchBookmarksData {
-    
-    let realm = try! Realm()
+class FetchBookmarksData: BookmarksRepoProtocol {
     
     func getCashedData(completion: (([Article])->())? ) {
-        let articlesDB = realm.objects(ArticleDB.self).where({ $0.isSaved == true })
+        let articlesDB = CasheManager.shared.getCashedObjects(ArticleDB.self).filter({ $0.isSaved == true })
         var articles: [Article] = []
         articlesDB.forEach { articleDB in
             articles.append( Article(category: articleDB.category,
@@ -33,21 +29,22 @@ class FetchBookmarksData {
     }
     
     func unmarkAllArticles() {
-        let articles = realm.objects(ArticleDB.self).where({ $0.isSaved == true })
-        try! self.realm.write {
-            for article in articles {
-                article.isSaved = false
-                realm.add(article, update: .all)
+        let articles = CasheManager.shared.getCashedObjects(ArticleDB.self).filter({ $0.isSaved == true })
+        articles.forEach { articleDB in
+            if let url = articleDB.url {
+                CasheManager.shared.updateCashedObj(ArticleDB.self, with: url) { objc in
+                    objc.isSaved = false
+                }
             }
+            
         }
     }
     
     func updateCashedObject(primaryKey: String?) {
-        let article = realm.objects(ArticleDB.self).where {
-            $0.url == primaryKey
-        }.first!
-        try! realm.write {
-            article.isSaved = !article.isSaved
+        if let primaryKey = primaryKey {
+            CasheManager.shared.updateCashedObj(ArticleDB.self, with: primaryKey) { obj in
+                obj.isSaved = !obj.isSaved
+            }
         }
     }
 }

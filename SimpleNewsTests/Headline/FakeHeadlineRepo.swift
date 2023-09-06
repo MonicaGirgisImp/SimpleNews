@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import Realm
-import RealmSwift
 
 @testable import SimpleNews
 

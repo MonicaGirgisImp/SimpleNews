@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66BAD2CF2AA873A600EA1C6E /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2CE2AA873A600EA1C6E /* RealmManager.swift */; };
+		66BAD2D22AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2D12AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift */; };
+		66BAD2D62AA87C3900EA1C6E /* BookmarksRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */; };
 		C50EA69F2A796228008E595D /* FakeHeadlineRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EA69E2A796228008E595D /* FakeHeadlineRepo.swift */; };
 		C50EA6A12A7962DE008E595D /* HeadlineViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EA6A02A7962DE008E595D /* HeadlineViewModelTest.swift */; };
 		C50EA6A72A796E6D008E595D /* FetchHeadlineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EA6A62A796E6D008E595D /* FetchHeadlineData.swift */; };
@@ -74,6 +77,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		66BAD2CE2AA873A600EA1C6E /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		66BAD2D12AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineRepoProtocol.swift; sourceTree = "<group>"; };
+		66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksRepoProtocol.swift; sourceTree = "<group>"; };
 		C50EA6932A794EEA008E595D /* SimpleNewsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleNewsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50EA69E2A796228008E595D /* FakeHeadlineRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeHeadlineRepo.swift; sourceTree = "<group>"; };
 		C50EA6A02A7962DE008E595D /* HeadlineViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineViewModelTest.swift; sourceTree = "<group>"; };
@@ -151,6 +157,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66BAD2D02AA87AB300EA1C6E /* Repo Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				66BAD2D12AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift */,
+			);
+			path = "Repo Protocol";
+			sourceTree = "<group>";
+		};
+		66BAD2D32AA87C0A00EA1C6E /* Repo */ = {
+			isa = PBXGroup;
+			children = (
+				C5D569A22A79809E0021F0A7 /* FetchBookmarksData.swift */,
+			);
+			path = Repo;
+			sourceTree = "<group>";
+		};
+		66BAD2D42AA87C1300EA1C6E /* Repo Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */,
+			);
+			path = "Repo Protocol";
+			sourceTree = "<group>";
+		};
 		C50EA6942A794EEA008E595D /* SimpleNewsTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +339,8 @@
 		C5A824AE278B742700297500 /* Bookmarks */ = {
 			isa = PBXGroup;
 			children = (
+				66BAD2D42AA87C1300EA1C6E /* Repo Protocol */,
+				66BAD2D32AA87C0A00EA1C6E /* Repo */,
 				C5CA52DE2A7823E80037A18E /* ViewModel */,
 				C5CA52DD2A7823E00037A18E /* View */,
 				C5CA52DC2A7823D50037A18E /* Model */,
@@ -446,6 +478,7 @@
 		C5B7B31A2789D7CC00505808 /* Headlines */ = {
 			isa = PBXGroup;
 			children = (
+				66BAD2D02AA87AB300EA1C6E /* Repo Protocol */,
 				C5D569A42A7982F90021F0A7 /* Repo */,
 				C5B7B31D2789D9FA00505808 /* Models */,
 				C5B7B3242789E36F00505808 /* Views */,
@@ -476,6 +509,7 @@
 			children = (
 				C5CA52D82A781AF80037A18E /* ArticlesDB.swift */,
 				C5CA52DA2A781BBD0037A18E /* SourceDB.swift */,
+				66BAD2CE2AA873A600EA1C6E /* RealmManager.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -483,7 +517,6 @@
 		C5CA52DC2A7823D50037A18E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C5D569A22A79809E0021F0A7 /* FetchBookmarksData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -675,10 +708,12 @@
 				C5D569A32A79809E0021F0A7 /* FetchBookmarksData.swift in Sources */,
 				C5CA52DB2A781BBD0037A18E /* SourceDB.swift in Sources */,
 				C5394C422A78025E00D39EE3 /* UIImageView + Extensions.swift in Sources */,
+				66BAD2D62AA87C3900EA1C6E /* BookmarksRepoProtocol.swift in Sources */,
 				C53AE8922A771309005FB75A /* HeadlineViewModel.swift in Sources */,
 				C5B7B2FD2789838400505808 /* URL + Extenstions.swift in Sources */,
 				C5CA52D92A781AF80037A18E /* ArticlesDB.swift in Sources */,
 				C5B7B3212789DCE600505808 /* Article.swift in Sources */,
+				66BAD2CF2AA873A600EA1C6E /* RealmManager.swift in Sources */,
 				C5B7B2F42789837700505808 /* APIHandler.swift in Sources */,
 				C50EA6A72A796E6D008E595D /* FetchHeadlineData.swift in Sources */,
 				C5B7B30E2789A33800505808 /* CountryCollectionViewCell.swift in Sources */,
@@ -697,6 +732,7 @@
 				C521A0EB278AADBB0050BAA9 /* webViewController.swift in Sources */,
 				C5FACC662A786CB30033B115 /* GIFImage.swift in Sources */,
 				C5B7B2FB2789838400505808 /* UIViewController+Extensions.swift in Sources */,
+				66BAD2D22AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift in Sources */,
 				C5B7B2FF2789838400505808 /* UIButton + Extensions.swift in Sources */,
 				C5F49237278B0A5900527AEF /* Categories.swift in Sources */,
 				C5394C362A77D16B00D39EE3 /* OnboardingViewModel.swift in Sources */,

@@ -6,8 +6,6 @@
 //
 
 import XCTest
-import Realm
-import RealmSwift
 
 @testable import SimpleNews
 
