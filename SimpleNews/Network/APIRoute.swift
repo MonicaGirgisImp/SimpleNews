@@ -49,11 +49,12 @@ class APIRoute{
                 
                 var responseModel:T!
                 do {
-                   // let json = try JSONSerialization.jsonObject(with: data, options: [])
-                   // guard JSONSerialization.isValidJSONObject(json) else {
-                   //     completion(.failure(.invalidData))
-                   //     return
-                   // }
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    guard JSONSerialization.isValidJSONObject(json) else {
+                        completion(.failure(.invalidData))
+                        return
+                    }
+                    print(json)
                     responseModel = try JSONDecoder().decode(T.self, from: data)
                 } catch let err {
                     print("request url:\(String(describing: request.url)) with serialization error \(err)")

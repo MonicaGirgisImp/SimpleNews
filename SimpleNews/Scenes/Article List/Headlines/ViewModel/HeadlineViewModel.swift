@@ -47,15 +47,21 @@ class HeadlinesViewModel {
     }
     
     func handleRepo(completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
-        guard let country = country else { return}
-        dispatchGroup = DispatchGroup()
-//        delegate?.loaderIsHidden(false)
         tempArticles = []
         getCashedData { [weak self] data in
             guard let self = self else { return }
             tempArticles = data
             settingUpDataSource()
         }
+        fetchData { result in
+            completion?(result)
+        }
+    }
+    
+    private func fetchData(completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
+        guard let country = country else { return}
+        dispatchGroup = DispatchGroup()
+//        delegate?.loaderIsHidden(false)
         tempArticles = []
         categories?.forEach({ category in
             dispatchGroup.enter()
@@ -94,7 +100,7 @@ class HeadlinesViewModel {
     }
     
     private func settingUpDataSource() {
-        if page == 1 {
+        if page == 1, !tempArticles.isEmpty {
             articlesData.articles = tempArticles
             delegate?.autoUpdateView()
         }else{
@@ -132,12 +138,12 @@ class HeadlinesViewModel {
     func getNextPage() {
         guard Network.reachability.isReachable else { return }
         page += 1
-        handleRepo()
+        fetchData()
     }
     
     func resetResults() {
         page = 1
-        handleRepo()
+        fetchData()
     }
     
     func searchArticles(with searchText: String, completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
