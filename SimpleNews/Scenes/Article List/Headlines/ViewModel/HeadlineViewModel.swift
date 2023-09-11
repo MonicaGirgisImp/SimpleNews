@@ -13,7 +13,7 @@ class HeadlinesViewModel {
     let country = UserManager.shared.getSelectedCountry()
     let categories = UserManager.shared.getSelectedCategories()
     
-    let headlineRepo: HeadlineDataRepo
+    let headlineRepo: HeadlineRepoProtocol
     
     private var dispatchGroup = DispatchGroup()
     private var page = 1
@@ -23,7 +23,7 @@ class HeadlinesViewModel {
     
     var delegate: ViewModelDelegates?
     
-    init(headlineRepo: HeadlineDataRepo) {
+    init(headlineRepo: HeadlineRepoProtocol) {
         self.headlineRepo = headlineRepo
     }
     
