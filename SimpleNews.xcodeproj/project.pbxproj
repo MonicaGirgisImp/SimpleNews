@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66A7FFAF2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7FFAE2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift */; };
+		66A7FFB12AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7FFB02AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift */; };
+		66A7FFB32AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7FFB22AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift */; };
 		66BAD2CF2AA873A600EA1C6E /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2CE2AA873A600EA1C6E /* RealmManager.swift */; };
 		66BAD2D22AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2D12AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift */; };
 		66BAD2D62AA87C3900EA1C6E /* BookmarksRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */; };
@@ -77,6 +80,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		66A7FFAE2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineLocalDataProtocol.swift; sourceTree = "<group>"; };
+		66A7FFB02AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineOfflineDataRepo.swift; sourceTree = "<group>"; };
+		66A7FFB22AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeHeadlineOfflineDataRepo.swift; sourceTree = "<group>"; };
 		66BAD2CE2AA873A600EA1C6E /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		66BAD2D12AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineRepoProtocol.swift; sourceTree = "<group>"; };
 		66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksRepoProtocol.swift; sourceTree = "<group>"; };
@@ -161,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				66BAD2D12AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift */,
+				66A7FFAE2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift */,
 			);
 			path = "Repo Protocol";
 			sourceTree = "<group>";
@@ -194,6 +201,7 @@
 			children = (
 				C50EA69E2A796228008E595D /* FakeHeadlineRepo.swift */,
 				C50EA6A02A7962DE008E595D /* HeadlineViewModelTest.swift */,
+				66A7FFB22AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift */,
 			);
 			path = Headline;
 			sourceTree = "<group>";
@@ -549,6 +557,7 @@
 			isa = PBXGroup;
 			children = (
 				C50EA6A62A796E6D008E595D /* FetchHeadlineData.swift */,
+				66A7FFB02AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift */,
 			);
 			path = Repo;
 			sourceTree = "<group>";
@@ -692,6 +701,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66A7FFB32AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift in Sources */,
 				C50EA6A12A7962DE008E595D /* HeadlineViewModelTest.swift in Sources */,
 				C50EA69F2A796228008E595D /* FakeHeadlineRepo.swift in Sources */,
 			);
@@ -710,6 +720,7 @@
 				C5394C422A78025E00D39EE3 /* UIImageView + Extensions.swift in Sources */,
 				66BAD2D62AA87C3900EA1C6E /* BookmarksRepoProtocol.swift in Sources */,
 				C53AE8922A771309005FB75A /* HeadlineViewModel.swift in Sources */,
+				66A7FFAF2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift in Sources */,
 				C5B7B2FD2789838400505808 /* URL + Extenstions.swift in Sources */,
 				C5CA52D92A781AF80037A18E /* ArticlesDB.swift in Sources */,
 				C5B7B3212789DCE600505808 /* Article.swift in Sources */,
@@ -731,6 +742,7 @@
 				C5B7B31F2789DA0F00505808 /* Countries.swift in Sources */,
 				C521A0EB278AADBB0050BAA9 /* webViewController.swift in Sources */,
 				C5FACC662A786CB30033B115 /* GIFImage.swift in Sources */,
+				66A7FFB12AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift in Sources */,
 				C5B7B2FB2789838400505808 /* UIViewController+Extensions.swift in Sources */,
 				66BAD2D22AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift in Sources */,
 				C5B7B2FF2789838400505808 /* UIButton + Extensions.swift in Sources */,

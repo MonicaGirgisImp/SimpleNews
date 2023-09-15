@@ -14,6 +14,7 @@ class HeadlinesViewModel {
     let categories = UserManager.shared.getSelectedCategories()
     
     let headlineRepo: HeadlineRepoProtocol
+    let headlineOfflineRepo: HeadlineLocalDataProtocol
     
     private var dispatchGroup = DispatchGroup()
     private var page = 1
@@ -23,32 +24,14 @@ class HeadlinesViewModel {
     
     var delegate: ViewModelDelegates?
     
-    init(headlineRepo: HeadlineRepoProtocol) {
+    init(headlineRepo: HeadlineRepoProtocol, headlineOfflineRepo: HeadlineLocalDataProtocol) {
         self.headlineRepo = headlineRepo
-    }
-    
-    private func getCashedData(completion: (([Article])->())? ) {
-        let articlesDB = CasheManager.shared.getCashedObjects(ArticleDB.self)
-        var articles: [Article] = []
-        articlesDB.forEach { articleDB in
-            articles.append( Article(category: articleDB.category,
-                                     source: Source(id: articleDB.source?.id, name: articleDB.source?.name),
-                                     author: articleDB.author,
-                                     title: articleDB.title,
-                                     articleDescription: articleDB.articleDescription,
-                                     url: articleDB.url,
-                                     urlToImage: articleDB.urlToImage,
-                                     publishedAt: articleDB.publishedAt,
-                                     date: articleDB.date,
-                                     content: articleDB.content,
-                                     isSaved: articleDB.isSaved))
-        }
-        completion?(articles)
+        self.headlineOfflineRepo = headlineOfflineRepo
     }
     
     func handleRepo(completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
         tempArticles = []
-        getCashedData { [weak self] data in
+        headlineOfflineRepo.getCashedData { [weak self] data in
             guard let self = self else { return }
             tempArticles = data
             settingUpDataSource()
@@ -58,7 +41,7 @@ class HeadlinesViewModel {
         }
     }
     
-    private func fetchData(completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
+    func fetchData(completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
         guard let country = country else { return}
         dispatchGroup = DispatchGroup()
 //        delegate?.loaderIsHidden(false)
@@ -73,9 +56,12 @@ class HeadlinesViewModel {
                     var tempData = data.articles
                     for i in 0..<tempData.count {
                         tempData[i].category = category
+                        if let date = saveDateStringToDate(dateString: tempData[i].publishedAt ?? "") {
+                            tempData[i].date = date
+                        }
                     }
                     tempArticles.append(contentsOf: tempData)
-                    casheArticles(articles: tempData)
+                    headlineOfflineRepo.casheArticles(articles: tempData)
                 case .failure(let error):
                     delegate?.failedWithError(error.localizedDescription)
                 }
@@ -85,18 +71,17 @@ class HeadlinesViewModel {
         handleDispatchGroupNotification()
     }
     
-    private func orderByDate() {
+    internal func saveDateStringToDate(dateString: String) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
         let newDateFormatter = DateFormatter()
         newDateFormatter.dateFormat = "MMM d, h:mm a"
         
-        for (index, article) in tempArticles.enumerated() {
-            guard let date = dateFormatter.date(from: article.publishedAt ?? "") else { return}
-            guard let newDate = newDateFormatter.date(from: newDateFormatter.string(from: date)) else { return}
-            tempArticles[index].date = newDate
-        }
+        guard let date = dateFormatter.date(from: dateString) else { return nil}
+        guard let newDate = newDateFormatter.date(from: newDateFormatter.string(from: date)) else { return nil }
+        
+        return newDate
     }
     
     private func settingUpDataSource() {
@@ -114,25 +99,9 @@ class HeadlinesViewModel {
     private func handleDispatchGroupNotification() {
         dispatchGroup.notify(queue: .main){ [weak self] in
             guard let self = self else { return }
-            orderByDate()
             delegate?.loaderIsHidden(true)
             settingUpDataSource()
         }
-    }
-    
-    private func casheArticles(articles: [Article]) {
-        var articlesDB = articles.map({ ArticleDB(category: $0.category, source: $0.source, author: $0.author, title: $0.title, articleDescription: $0.articleDescription, url: $0.url, urlToImage: $0.urlToImage, publishedAt: $0.publishedAt, date: $0.date, content: $0.content, isSaved: $0.isSaved) })
-        
-        let cashedData = CasheManager.shared.getCashedObjects(ArticleDB.self)
-        cashedData.forEach { articleDB in
-            articlesDB.removeAll(where: { $0.url == articleDB.url })
-        }
-        
-        CasheManager.shared.casheObjects(articlesDB)
-    }
-    
-    private func deleteCashedArticles() {
-        CasheManager.shared.deleteObjects(ArticleDB.self)
     }
     
     func getNextPage() {
