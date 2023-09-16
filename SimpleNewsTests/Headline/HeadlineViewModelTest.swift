@@ -79,14 +79,14 @@ final class HeadlineViewModelTest: XCTestCase {
     
     func testSaveDateString_WithValidParam_ReturnDate() {
         let testString = "2023-09-14T07:33:18Z"
-        var actualResult = headlineViewModel.saveDateStringToDate(dateString: testString)
+        let actualResult = headlineViewModel.saveDateStringToDate(dateString: testString)
         
         XCTAssertNotNil(actualResult)
         }
     
     func testSaveDateString_WithInValidParam_ReturnNil() {
         let testString = ""
-        var actualResult = headlineViewModel.saveDateStringToDate(dateString: testString)
+        let actualResult = headlineViewModel.saveDateStringToDate(dateString: testString)
         
         XCTAssertNil(actualResult)
     }
@@ -117,8 +117,18 @@ final class HeadlineViewModelTest: XCTestCase {
         XCTAssertEqual(response, APIError.responseUnsuccessful)
     }
     
-    func addArticleToBookmarks_WithValidParameters_ShouldReturnSuccess() {
+    func testAddArticleToBookmarks_WithValidParameters_ShouldAlterValue() {
+        let testIndex = 0
+        fakeHeadlineRepo.testCaseState = .success
+        let testValue = false
         
+        let expectation = XCTestExpectation(description: "Data Loaded")
+        headlineViewModel.handleRepo { _ in
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 5.0)
+        
+        headlineViewModel.addArticleToBookmarks(at: testIndex)
+        XCTAssertNotEqual(testValue, headlineViewModel.articlesData.articles[testIndex].isSaved)
     }
-
 }

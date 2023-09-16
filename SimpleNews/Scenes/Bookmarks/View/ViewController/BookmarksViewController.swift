@@ -11,7 +11,7 @@ class BookmarksViewController: UIViewController {
 
     @IBOutlet weak var bookmarksTableView: UITableView!
     
-    var viewModel = BookmarksViewModel()
+    var viewModel = BookmarksViewModel(bookmarksRepo: FetchBookmarksData())
     
     override func viewDidLoad() {
         super.viewDidLoad()

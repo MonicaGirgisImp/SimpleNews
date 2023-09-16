@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66966CA52AB5AF4700870309 /* FakeBookmarksDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66966CA42AB5AF4700870309 /* FakeBookmarksDataRepo.swift */; };
+		66966CA72AB5AF8B00870309 /* BookmarksViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66966CA62AB5AF8B00870309 /* BookmarksViewModelTest.swift */; };
 		66A7FFAF2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7FFAE2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift */; };
 		66A7FFB12AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7FFB02AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift */; };
 		66A7FFB32AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7FFB22AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift */; };
@@ -80,6 +82,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		66966CA42AB5AF4700870309 /* FakeBookmarksDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBookmarksDataRepo.swift; sourceTree = "<group>"; };
+		66966CA62AB5AF8B00870309 /* BookmarksViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewModelTest.swift; sourceTree = "<group>"; };
 		66A7FFAE2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineLocalDataProtocol.swift; sourceTree = "<group>"; };
 		66A7FFB02AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineOfflineDataRepo.swift; sourceTree = "<group>"; };
 		66A7FFB22AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeHeadlineOfflineDataRepo.swift; sourceTree = "<group>"; };
@@ -163,6 +167,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66966CA32AB5AF1F00870309 /* Bookmarks */ = {
+			isa = PBXGroup;
+			children = (
+				66966CA42AB5AF4700870309 /* FakeBookmarksDataRepo.swift */,
+				66966CA62AB5AF8B00870309 /* BookmarksViewModelTest.swift */,
+			);
+			path = Bookmarks;
+			sourceTree = "<group>";
+		};
 		66BAD2D02AA87AB300EA1C6E /* Repo Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +204,7 @@
 		C50EA6942A794EEA008E595D /* SimpleNewsTests */ = {
 			isa = PBXGroup;
 			children = (
+				66966CA32AB5AF1F00870309 /* Bookmarks */,
 				C50EA6A52A796861008E595D /* Headline */,
 			);
 			path = SimpleNewsTests;
@@ -703,6 +717,8 @@
 			files = (
 				66A7FFB32AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift in Sources */,
 				C50EA6A12A7962DE008E595D /* HeadlineViewModelTest.swift in Sources */,
+				66966CA52AB5AF4700870309 /* FakeBookmarksDataRepo.swift in Sources */,
+				66966CA72AB5AF8B00870309 /* BookmarksViewModelTest.swift in Sources */,
 				C50EA69F2A796228008E595D /* FakeHeadlineRepo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

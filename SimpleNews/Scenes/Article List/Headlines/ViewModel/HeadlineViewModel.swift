@@ -145,6 +145,7 @@ class HeadlinesViewModel {
     }
     
     func addArticleToBookmarks(at index: Int) {
+        guard index >= 0, index < articlesData.articles.count else { return }
         articlesData.articles[index].isSaved = !(articlesData.articles[index].isSaved ?? false)
         if let url = articlesData.articles[index].url {
             CasheManager.shared.updateCashedObj(ArticleDB.self, with: url) { objc in

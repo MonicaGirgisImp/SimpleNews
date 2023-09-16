@@ -9,6 +9,4 @@ import Foundation
 
 protocol BookmarksRepoProtocol: AnyObject {
     func getCashedData(completion: (([Article])->())? )
-    func unmarkAllArticles()
-    func updateCashedObject(primaryKey: String?)
 }

@@ -27,24 +27,4 @@ class FetchBookmarksData: BookmarksRepoProtocol {
         }
         completion?(articles)
     }
-    
-    func unmarkAllArticles() {
-        let articles = CasheManager.shared.getCashedObjects(ArticleDB.self).filter({ $0.isSaved == true })
-        articles.forEach { articleDB in
-            if let url = articleDB.url {
-                CasheManager.shared.updateCashedObj(ArticleDB.self, with: url) { objc in
-                    objc.isSaved = false
-                }
-            }
-            
-        }
-    }
-    
-    func updateCashedObject(primaryKey: String?) {
-        if let primaryKey = primaryKey {
-            CasheManager.shared.updateCashedObj(ArticleDB.self, with: primaryKey) { obj in
-                obj.isSaved = !obj.isSaved
-            }
-        }
-    }
 }
