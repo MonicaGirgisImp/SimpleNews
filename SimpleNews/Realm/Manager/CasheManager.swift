@@ -1,5 +1,5 @@
 //
-//  RealmManager.swift
+//  CasheManager.swift
 //  SimpleNews
 //
 //  Created by Monica Imperial on 06/09/2023.
@@ -9,7 +9,7 @@ import Foundation
 import Realm
 import RealmSwift
 
-class CasheManager {
+class CasheManager: CasheManagerProtocol {
     
     static let shared:CasheManager = CasheManager()
     
@@ -19,7 +19,7 @@ class CasheManager {
     func casheObject<T: Object>( _ realmObject: T) {
         do {
             try realm.write({
-                realm.add(realmObject)
+                realm.add(realmObject, update: .all)
             })
         }catch let err{
             print(err.localizedDescription)
@@ -28,7 +28,7 @@ class CasheManager {
     func casheObjects<T: Object>( _ realmObjects: [T]) {
         do {
             try realm.write({
-                realm.add(realmObjects)
+                realm.add(realmObjects, update: .all)
             })
         }catch let err{
             print(err.localizedDescription)

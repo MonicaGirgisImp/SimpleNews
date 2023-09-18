@@ -35,7 +35,7 @@ final class BookmarksViewModelTest: XCTestCase {
         XCTAssertEqual(bookmarkViewModel.bookmarks, [])
     }
     
-    func testUnMarkArticle() {
+    func testUnMarkArticle_WithValidParameter() {
         let testIndex = 0
         bookmarkViewModel.handleRepo()
         bookmarkViewModel.unmarkArticle(at: testIndex)

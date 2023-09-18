@@ -12,9 +12,11 @@
 		66A7FFAF2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7FFAE2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift */; };
 		66A7FFB12AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7FFB02AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift */; };
 		66A7FFB32AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7FFB22AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift */; };
-		66BAD2CF2AA873A600EA1C6E /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2CE2AA873A600EA1C6E /* RealmManager.swift */; };
+		66BAD2CF2AA873A600EA1C6E /* CasheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2CE2AA873A600EA1C6E /* CasheManager.swift */; };
 		66BAD2D22AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2D12AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift */; };
 		66BAD2D62AA87C3900EA1C6E /* BookmarksRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */; };
+		66C918122AB8481400A31C9F /* CasheManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C918112AB8481400A31C9F /* CasheManagerProtocol.swift */; };
+		66C918152AB849FC00A31C9F /* CasheManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C918142AB849FC00A31C9F /* CasheManagerTest.swift */; };
 		C50EA69F2A796228008E595D /* FakeHeadlineRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EA69E2A796228008E595D /* FakeHeadlineRepo.swift */; };
 		C50EA6A12A7962DE008E595D /* HeadlineViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EA6A02A7962DE008E595D /* HeadlineViewModelTest.swift */; };
 		C50EA6A72A796E6D008E595D /* FetchHeadlineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EA6A62A796E6D008E595D /* FetchHeadlineData.swift */; };
@@ -87,9 +89,11 @@
 		66A7FFAE2AB49A020026ADCF /* HeadlineLocalDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineLocalDataProtocol.swift; sourceTree = "<group>"; };
 		66A7FFB02AB49AED0026ADCF /* HeadlineOfflineDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineOfflineDataRepo.swift; sourceTree = "<group>"; };
 		66A7FFB22AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeHeadlineOfflineDataRepo.swift; sourceTree = "<group>"; };
-		66BAD2CE2AA873A600EA1C6E /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		66BAD2CE2AA873A600EA1C6E /* CasheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasheManager.swift; sourceTree = "<group>"; };
 		66BAD2D12AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineRepoProtocol.swift; sourceTree = "<group>"; };
 		66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksRepoProtocol.swift; sourceTree = "<group>"; };
+		66C918112AB8481400A31C9F /* CasheManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasheManagerProtocol.swift; sourceTree = "<group>"; };
+		66C918142AB849FC00A31C9F /* CasheManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasheManagerTest.swift; sourceTree = "<group>"; };
 		C50EA6932A794EEA008E595D /* SimpleNewsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleNewsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50EA69E2A796228008E595D /* FakeHeadlineRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeHeadlineRepo.swift; sourceTree = "<group>"; };
 		C50EA6A02A7962DE008E595D /* HeadlineViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineViewModelTest.swift; sourceTree = "<group>"; };
@@ -201,9 +205,36 @@
 			path = "Repo Protocol";
 			sourceTree = "<group>";
 		};
+		66C9180E2AB847DC00A31C9F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C5CA52D82A781AF80037A18E /* ArticlesDB.swift */,
+				C5CA52DA2A781BBD0037A18E /* SourceDB.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		66C918102AB847F400A31C9F /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				66BAD2CE2AA873A600EA1C6E /* CasheManager.swift */,
+				66C918112AB8481400A31C9F /* CasheManagerProtocol.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		66C918132AB8493D00A31C9F /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				66C918142AB849FC00A31C9F /* CasheManagerTest.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		C50EA6942A794EEA008E595D /* SimpleNewsTests */ = {
 			isa = PBXGroup;
 			children = (
+				66C918132AB8493D00A31C9F /* Realm */,
 				66966CA32AB5AF1F00870309 /* Bookmarks */,
 				C50EA6A52A796861008E595D /* Headline */,
 			);
@@ -529,9 +560,8 @@
 		C5CA52D72A7819DD0037A18E /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				C5CA52D82A781AF80037A18E /* ArticlesDB.swift */,
-				C5CA52DA2A781BBD0037A18E /* SourceDB.swift */,
-				66BAD2CE2AA873A600EA1C6E /* RealmManager.swift */,
+				66C918102AB847F400A31C9F /* Manager */,
+				66C9180E2AB847DC00A31C9F /* Classes */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -717,6 +747,7 @@
 			files = (
 				66A7FFB32AB49C140026ADCF /* FakeHeadlineOfflineDataRepo.swift in Sources */,
 				C50EA6A12A7962DE008E595D /* HeadlineViewModelTest.swift in Sources */,
+				66C918152AB849FC00A31C9F /* CasheManagerTest.swift in Sources */,
 				66966CA52AB5AF4700870309 /* FakeBookmarksDataRepo.swift in Sources */,
 				66966CA72AB5AF8B00870309 /* BookmarksViewModelTest.swift in Sources */,
 				C50EA69F2A796228008E595D /* FakeHeadlineRepo.swift in Sources */,
@@ -740,7 +771,7 @@
 				C5B7B2FD2789838400505808 /* URL + Extenstions.swift in Sources */,
 				C5CA52D92A781AF80037A18E /* ArticlesDB.swift in Sources */,
 				C5B7B3212789DCE600505808 /* Article.swift in Sources */,
-				66BAD2CF2AA873A600EA1C6E /* RealmManager.swift in Sources */,
+				66BAD2CF2AA873A600EA1C6E /* CasheManager.swift in Sources */,
 				C5B7B2F42789837700505808 /* APIHandler.swift in Sources */,
 				C50EA6A72A796E6D008E595D /* FetchHeadlineData.swift in Sources */,
 				C5B7B30E2789A33800505808 /* CountryCollectionViewCell.swift in Sources */,
@@ -750,6 +781,7 @@
 				C5B7B3162789CAB500505808 /* StartNewsCollectionViewCell.swift in Sources */,
 				C55CB49F2A77B111006FE782 /* ViewModelDelegates.swift in Sources */,
 				C5394C292A77BC6100D39EE3 /* Reachability.swift in Sources */,
+				66C918122AB8481400A31C9F /* CasheManagerProtocol.swift in Sources */,
 				C5CA52E12A78240C0037A18E /* BookmarksViewModel.swift in Sources */,
 				C5B7B3122789AFD100505808 /* CollectionSetCollectionViewCell.swift in Sources */,
 				C5B7B2F12789837700505808 /* APIError.swift in Sources */,
