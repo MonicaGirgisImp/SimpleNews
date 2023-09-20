@@ -17,6 +17,7 @@
 		66BAD2D62AA87C3900EA1C6E /* BookmarksRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */; };
 		66C918122AB8481400A31C9F /* CasheManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C918112AB8481400A31C9F /* CasheManagerProtocol.swift */; };
 		66C918152AB849FC00A31C9F /* CasheManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C918142AB849FC00A31C9F /* CasheManagerTest.swift */; };
+		66FFFC4F2ABAEC0700353294 /* APIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FFFC4E2ABAEC0700353294 /* APIProtocol.swift */; };
 		C50EA69F2A796228008E595D /* FakeHeadlineRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EA69E2A796228008E595D /* FakeHeadlineRepo.swift */; };
 		C50EA6A12A7962DE008E595D /* HeadlineViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EA6A02A7962DE008E595D /* HeadlineViewModelTest.swift */; };
 		C50EA6A72A796E6D008E595D /* FetchHeadlineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EA6A62A796E6D008E595D /* FetchHeadlineData.swift */; };
@@ -94,6 +95,7 @@
 		66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksRepoProtocol.swift; sourceTree = "<group>"; };
 		66C918112AB8481400A31C9F /* CasheManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasheManagerProtocol.swift; sourceTree = "<group>"; };
 		66C918142AB849FC00A31C9F /* CasheManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasheManagerTest.swift; sourceTree = "<group>"; };
+		66FFFC4E2ABAEC0700353294 /* APIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProtocol.swift; sourceTree = "<group>"; };
 		C50EA6932A794EEA008E595D /* SimpleNewsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleNewsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50EA69E2A796228008E595D /* FakeHeadlineRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeHeadlineRepo.swift; sourceTree = "<group>"; };
 		C50EA6A02A7962DE008E595D /* HeadlineViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineViewModelTest.swift; sourceTree = "<group>"; };
@@ -447,6 +449,7 @@
 				C5B7B2EF2789837700505808 /* APIRoute.swift */,
 				C5B7B2F02789837700505808 /* APIHandler.swift */,
 				C5B7B3222789DFCE00505808 /* APIResponse.swift */,
+				66FFFC4E2ABAEC0700353294 /* APIProtocol.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -782,6 +785,7 @@
 				C55CB49F2A77B111006FE782 /* ViewModelDelegates.swift in Sources */,
 				C5394C292A77BC6100D39EE3 /* Reachability.swift in Sources */,
 				66C918122AB8481400A31C9F /* CasheManagerProtocol.swift in Sources */,
+				66FFFC4F2ABAEC0700353294 /* APIProtocol.swift in Sources */,
 				C5CA52E12A78240C0037A18E /* BookmarksViewModel.swift in Sources */,
 				C5B7B3122789AFD100505808 /* CollectionSetCollectionViewCell.swift in Sources */,
 				C5B7B2F12789837700505808 /* APIError.swift in Sources */,

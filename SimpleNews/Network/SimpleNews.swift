@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SimpleNews{
+enum SimpleNews {
     case GetData(country: String, category: String, page: Int, pageSize: Int)
     case Search(searchText: String, category: String, page: Int, pageSize: Int)
 }
@@ -26,7 +26,7 @@ extension SimpleNews: Endpoint{
     }
     
     var queryItems: [URLQueryItem] {
-        switch self{
+        switch self {
         case .GetData(let country, let category, let page, let pageSize):
             return [URLQueryItem(name: "country", value: country),
                     URLQueryItem(name: "category", value: category),

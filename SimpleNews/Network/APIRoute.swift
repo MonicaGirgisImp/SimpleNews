@@ -7,12 +7,12 @@
 
 import Foundation
 
-class APIRoute{
+class APIRoute: APIProtocol{
     
     static let shared:APIRoute = APIRoute()
     private init(){}
     
-    private func initRequest(_ clientRequest:SimpleNews)->URLRequest? {
+    func initRequest(_ clientRequest:SimpleNews)->URLRequest? {
         var request:URLRequest = clientRequest.request
         
         request.httpMethod = clientRequest.method.rawValue
@@ -32,7 +32,7 @@ class APIRoute{
         return request
     }
     
-    private func JSONTask<T:Decodable>(with request: URLRequest, decodingModel: T.Type, completion: @escaping (Result<T, APIError>)-> Void) -> URLSessionDataTask {
+    func JSONTask<T:Decodable>(with request: URLRequest, decodingModel: T.Type, completion: @escaping (Result<T, APIError>)-> Void) -> URLSessionDataTask {
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: request) { (data, response, error) in
             guard let httpResponse = response as? HTTPURLResponse else {
@@ -79,7 +79,7 @@ class APIRoute{
         return task
     }
     
-    func fetchRequest<T: Codable>(clientRequest: SimpleNews, decodingModel: T.Type, completion: @escaping (Result<T, APIError>) -> ()){
+    func fetchRequest<T: Codable>(clientRequest: SimpleNews, decodingModel: T.Type, completion: @escaping (Result<T, APIError>) -> ()) {
         
         guard let urlRequest:URLRequest = self.initRequest(clientRequest) else {return}
         
