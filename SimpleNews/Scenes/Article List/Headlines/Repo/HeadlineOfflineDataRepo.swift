@@ -37,4 +37,8 @@ class HeadlineOfflineDataRepo: HeadlineLocalDataProtocol {
         
         CasheManager.shared.casheObjects(articlesDB)
     }
+    
+    func deleteAllRecords() {
+        CasheManager.shared.deleteObjects(ArticleDB.self)
+    }
 }

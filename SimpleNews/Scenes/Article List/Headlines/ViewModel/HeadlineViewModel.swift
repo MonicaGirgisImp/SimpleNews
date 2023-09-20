@@ -19,6 +19,7 @@ class HeadlinesViewModel {
     private var dispatchGroup = DispatchGroup()
     private var page = 1
     private var tempArticles: [Article] = []
+    private var isSameDataFlag: Bool = false
     
     private (set) var articlesData: APIResponse<[Article]> = APIResponse(totalResults: nil, articles: [], status: nil)
     
@@ -44,7 +45,6 @@ class HeadlinesViewModel {
     func fetchData(completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
         guard let country = country else { return}
         dispatchGroup = DispatchGroup()
-//        delegate?.loaderIsHidden(false)
         tempArticles = []
         categories?.forEach({ category in
             dispatchGroup.enter()
@@ -53,6 +53,11 @@ class HeadlinesViewModel {
                 guard let self = self else { return}
                 switch response{
                 case .success(let data):
+                    
+                    if articlesData.articles.contains(where: { $0.url == data.articles.first?.url }) {
+                        isSameDataFlag = true
+                    }
+                    
                     var tempData = data.articles
                     for i in 0..<tempData.count {
                         tempData[i].category = category
@@ -61,7 +66,7 @@ class HeadlinesViewModel {
                         }
                     }
                     tempArticles.append(contentsOf: tempData)
-                    headlineOfflineRepo.casheArticles(articles: tempData)
+                    
                 case .failure(let error):
                     delegate?.failedWithError(error.localizedDescription)
                 }
@@ -84,6 +89,15 @@ class HeadlinesViewModel {
         return newDate
     }
     
+    private func calculateNumberOfOfflinePages() -> Int {
+        var count = 0
+        headlineOfflineRepo.getCashedData { cashedArticles in
+            count = cashedArticles.count
+        }
+        
+        return count / (pageSize * 3) /// 3 apis are called and each give 20 record (page size)
+    }
+    
     private func settingUpDataSource() {
         if page == 1, !tempArticles.isEmpty {
             articlesData.articles = tempArticles
@@ -99,8 +113,20 @@ class HeadlinesViewModel {
     private func handleDispatchGroupNotification() {
         dispatchGroup.notify(queue: .main){ [weak self] in
             guard let self = self else { return }
-            delegate?.loaderIsHidden(true)
-            settingUpDataSource()
+            if (tempArticles.first?.url == articlesData.articles.first?.url || isSameDataFlag), page == 1 {
+                let count = calculateNumberOfOfflinePages()
+                page = count + 1
+                fetchData()
+            }else if page == 1{
+                headlineOfflineRepo.deleteAllRecords()
+                headlineOfflineRepo.casheArticles(articles: tempArticles)
+                articlesData.articles.removeAll()
+                delegate?.autoUpdateView()
+                settingUpDataSource()
+            }else{
+                headlineOfflineRepo.casheArticles(articles: tempArticles)
+                settingUpDataSource()
+            }
         }
     }
     

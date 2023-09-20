@@ -13,7 +13,7 @@ class CasheManager: CasheManagerProtocol {
     
     static let shared:CasheManager = CasheManager()
     
-    private let realm = try! Realm()
+    private var realm = try! Realm()
     private init(){}
     
     func casheObject<T: Object>( _ realmObject: T) {
@@ -66,5 +66,9 @@ class CasheManager: CasheManagerProtocol {
                 print(err.localizedDescription)
             }
         }
+    }
+    
+    func resetRealm() {
+        realm = try! Realm()
     }
 }

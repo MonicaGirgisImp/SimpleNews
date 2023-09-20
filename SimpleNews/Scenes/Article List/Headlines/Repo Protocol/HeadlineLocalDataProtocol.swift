@@ -11,4 +11,5 @@ import Foundation
 protocol HeadlineLocalDataProtocol: AnyObject {
     func getCashedData(completion: (([Article])->())?)
     func casheArticles(articles: [Article])
+    func deleteAllRecords()
 }
