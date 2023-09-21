@@ -44,9 +44,9 @@ class CasheManager: CasheManagerProtocol {
     
     func deleteObjects<T: Object>(_ model: T.Type) {
         do {
-            realm.beginWrite()
             let cashedData = realm.objects(T.self)
             guard !cashedData.isEmpty else { return }
+            realm.beginWrite()
             realm.delete(cashedData)
             try realm.commitWrite()
             

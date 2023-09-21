@@ -23,7 +23,11 @@ final class FakeHeadlineRepo: HeadlineRepoProtocol {
         self.testCaseState = testCaseState
     }
     
-    func fetchArticles(page: Int, pageSize: Int, country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>)->())?) {
+    func fetchData(country: String, categories: [String], completion: ((Result<APIResponse<[Article]>, APIError>) -> ())?) {
+        
+    }
+    
+    func fetchArticles(page: Int, pageSize: Int, country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>) -> ())?) {
         switch testCaseState {
         case .success:
             completion?(.success(successModdel))
@@ -32,12 +36,28 @@ final class FakeHeadlineRepo: HeadlineRepoProtocol {
         }
     }
     
-    func fetchSearchResultWith(_ searchText: String, page: Int, pageSize: Int, country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>)->())?) {
+    func fetchSearchResultWith(_ searchText: String, page: Int, pageSize: Int, country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>) -> ())?) {
         switch testCaseState {
         case .success:
             completion?(.success(successModdel))
         case .fail:
             completion?(.failure(.responseUnsuccessful))
         }
+    }
+    
+    func fetchSearchData(_ searchText: String, page: Int, country: String, categories: [String], completion: ((Result<APIResponse<[Article]>, APIError>) -> ())?) {
+        
+    }
+    
+    func getCashedData() -> [Article] {
+        return successModdel.articles
+    }
+    
+    func casheArticles(articles: [Article]) {
+//        successModdel.articles = articles
+    }
+    
+    func deleteAllRecords() {
+        
     }
 }

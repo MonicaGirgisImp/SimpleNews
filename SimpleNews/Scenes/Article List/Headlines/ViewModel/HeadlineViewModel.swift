@@ -9,165 +9,71 @@ import Foundation
 
 class HeadlinesViewModel {
     
-    let pageSize = 20
     let country = UserManager.shared.getSelectedCountry()
     let categories = UserManager.shared.getSelectedCategories()
-    
     let headlineRepo: HeadlineRepoProtocol
-    let headlineOfflineRepo: HeadlineLocalDataProtocol
     
-    private var dispatchGroup = DispatchGroup()
-    private var page = 1
-    private var tempArticles: [Article] = []
-    private var isSameDataFlag: Bool = false
+    private var didGetNextPage = false
     
-    private (set) var articlesData: APIResponse<[Article]> = APIResponse(totalResults: nil, articles: [], status: nil)
+    private (set) var articlesData: APIResponse<[Article]> = APIResponse(page: nil, totalResults: nil, articles: [], status: nil)
     
     var delegate: ViewModelDelegates?
     
-    init(headlineRepo: HeadlineRepoProtocol, headlineOfflineRepo: HeadlineLocalDataProtocol) {
+    init(headlineRepo: HeadlineRepoProtocol) {
         self.headlineRepo = headlineRepo
-        self.headlineOfflineRepo = headlineOfflineRepo
     }
     
-    func handleRepo(completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
-        tempArticles = []
-        headlineOfflineRepo.getCashedData { [weak self] data in
+    func fetchData() {
+        guard let country = country, let categories = categories else { return }
+        didGetNextPage = true
+        headlineRepo.fetchData(country: country, categories: categories, completion: { [weak self] response in
             guard let self = self else { return }
-            tempArticles = data
-            settingUpDataSource()
-        }
-        fetchData { result in
-            completion?(result)
-        }
-    }
-    
-    func fetchData(completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
-        guard let country = country else { return}
-        dispatchGroup = DispatchGroup()
-        tempArticles = []
-        categories?.forEach({ category in
-            dispatchGroup.enter()
-            headlineRepo.fetchArticles(page: page, pageSize: pageSize, country: country, category: category) { [weak self] response in
-                completion?(response)
-                guard let self = self else { return}
-                switch response{
-                case .success(let data):
-                    
-                    if articlesData.articles.contains(where: { $0.url == data.articles.first?.url }) {
-                        isSameDataFlag = true
-                    }
-                    
-                    var tempData = data.articles
-                    for i in 0..<tempData.count {
-                        tempData[i].category = category
-                        if let date = saveDateStringToDate(dateString: tempData[i].publishedAt ?? "") {
-                            tempData[i].date = date
-                        }
-                    }
-                    tempArticles.append(contentsOf: tempData)
-                    
-                case .failure(let error):
-                    delegate?.failedWithError(error.localizedDescription)
-                }
-                dispatchGroup.leave()
+            didGetNextPage = false
+            switch response {
+            case .success(let data):
+                articlesData = data
+                delegate?.autoUpdateView()
+            case .failure(let error):
+                delegate?.failedWithError(error.localizedDescription)
             }
         })
-        handleDispatchGroupNotification()
     }
     
-    internal func saveDateStringToDate(dateString: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        
-        let newDateFormatter = DateFormatter()
-        newDateFormatter.dateFormat = "MMM d, h:mm a"
-        
-        guard let date = dateFormatter.date(from: dateString) else { return nil}
-        guard let newDate = newDateFormatter.date(from: newDateFormatter.string(from: date)) else { return nil }
-        
-        return newDate
-    }
-    
-    private func calculateNumberOfOfflinePages() -> Int {
-        var count = 0
-        headlineOfflineRepo.getCashedData { cashedArticles in
-            count = cashedArticles.count
-        }
-        
-        return count / (pageSize * 3) /// 3 apis are called and each give 20 record (page size)
-    }
-    
-    private func settingUpDataSource() {
-        if page == 1, !tempArticles.isEmpty {
-            articlesData.articles = tempArticles
-            delegate?.autoUpdateView()
-        }else{
-            let initialIndex = articlesData.articles.count - 1
-            articlesData.articles.append(contentsOf: tempArticles)
-            let endIndex = articlesData.articles.count - 1
-            delegate?.insertNewRows(initialIndex, endIndex, 0)
-        }
-    }
-    
-    private func handleDispatchGroupNotification() {
-        dispatchGroup.notify(queue: .main){ [weak self] in
-            guard let self = self else { return }
-            if (tempArticles.first?.url == articlesData.articles.first?.url || isSameDataFlag), page == 1 {
-                let count = calculateNumberOfOfflinePages()
-                page = count + 1
-                fetchData()
-            }else if page == 1{
-                headlineOfflineRepo.deleteAllRecords()
-                headlineOfflineRepo.casheArticles(articles: tempArticles)
-                articlesData.articles.removeAll()
-                delegate?.autoUpdateView()
-                settingUpDataSource()
-            }else{
-                headlineOfflineRepo.casheArticles(articles: tempArticles)
-                settingUpDataSource()
-            }
-        }
-    }
+//    private func settingUpDataSource() {
+//        if page == 1, !tempArticles.isEmpty {
+//            articlesData.articles = tempArticles
+//            delegate?.autoUpdateView()
+//        }else{
+//            let initialIndex = articlesData.articles.count - 1
+//            articlesData.articles.append(contentsOf: tempArticles)
+//            let endIndex = articlesData.articles.count - 1
+//            delegate?.insertNewRows(initialIndex, endIndex, 0)
+//        }
+//    }
     
     func getNextPage() {
-        guard Network.reachability.isReachable else { return }
-        page += 1
+        guard Network.reachability.isReachable, !didGetNextPage else { return }
         fetchData()
     }
     
     func resetResults() {
-        page = 1
+        headlineRepo.deleteAllRecords()
         fetchData()
     }
     
     func searchArticles(with searchText: String, completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
-        guard let country = country else { return }
-        page = 1
-        dispatchGroup = DispatchGroup()
+        guard let country = country, let categories = categories else { return }
         delegate?.loaderIsHidden(false)
-        tempArticles = []
-        categories?.forEach({ category in
-            dispatchGroup.enter()
-            headlineRepo.fetchSearchResultWith(searchText, page: page, pageSize: pageSize, country: country, category: category) { [weak self] response in
-                completion?(response)
-                guard let self = self else { return}
-                switch response{
-                case .success(let data):
-                    var tempData = data.articles
-                    for i in 0..<tempData.count {
-                        tempData[i].category = category
-                    }
-                    tempArticles.append(contentsOf: tempData)
-                case .failure(let error):
-                    delegate?.failedWithError(error.localizedDescription)
-                }
-                dispatchGroup.leave()
-                
+        headlineRepo.fetchSearchData(searchText, page: 1, country: country, categories: categories) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                articlesData = data
+                delegate?.autoUpdateView()
+            case .failure(let error):
+                delegate?.failedWithError(error.localizedDescription)
             }
-        })
-        
-        handleDispatchGroupNotification()
+        }
     }
     
     func addArticleToBookmarks(at index: Int) {

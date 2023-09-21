@@ -12,6 +12,7 @@ struct APIResponse<R: Codable>: Equatable, Codable {
         return (lhs.articles as? [Article])?.count == (rhs.articles as? [Article])?.count
     }
     
+    var page: Int?
     var totalResults: Int?
     var articles: R
     var status: String?

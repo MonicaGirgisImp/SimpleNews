@@ -20,9 +20,9 @@ class HeadlinesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        viewModel = HeadlinesViewModel(headlineRepo: HeadlineDataRepo(), headlineOfflineRepo: HeadlineOfflineDataRepo())
+        viewModel = HeadlinesViewModel(headlineRepo: HeadlineDataRepo())
         viewModel.delegate = self
-        viewModel.handleRepo()
+        viewModel.fetchData()
     }
     
     private func setupUI(){
