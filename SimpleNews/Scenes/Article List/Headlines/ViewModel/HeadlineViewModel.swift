@@ -24,9 +24,9 @@ class HeadlinesViewModel {
     }
     
     func fetchData() {
-        guard let country = country, let categories = categories else { return }
+        guard let country = country, let category = categories?.first else { return }
         didGetNextPage = true
-        headlineRepo.fetchData(country: country, categories: categories, completion: { [weak self] response in
+        headlineRepo.fetchData(country: country, category: category, completion: { [weak self] response in
             guard let self = self else { return }
             didGetNextPage = false
             switch response {
@@ -39,17 +39,17 @@ class HeadlinesViewModel {
         })
     }
     
-//    private func settingUpDataSource() {
-//        if page == 1, !tempArticles.isEmpty {
-//            articlesData.articles = tempArticles
-//            delegate?.autoUpdateView()
-//        }else{
-//            let initialIndex = articlesData.articles.count - 1
-//            articlesData.articles.append(contentsOf: tempArticles)
-//            let endIndex = articlesData.articles.count - 1
-//            delegate?.insertNewRows(initialIndex, endIndex, 0)
-//        }
-//    }
+    private func settingUpDataSource(newData: APIResponse<[Article]>) {
+        if newData.page == 1 {
+            articlesData = newData
+            delegate?.autoUpdateView()
+        }else{
+            let initialIndex = articlesData.articles.count - 1
+            articlesData.articles.append(contentsOf: newData.articles)
+            let endIndex = articlesData.articles.count - 1
+            delegate?.insertNewRows(initialIndex, endIndex, 0)
+        }
+    }
     
     func getNextPage() {
         guard Network.reachability.isReachable, !didGetNextPage else { return }
@@ -62,9 +62,9 @@ class HeadlinesViewModel {
     }
     
     func searchArticles(with searchText: String, completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
-        guard let country = country, let categories = categories else { return }
+        guard let country = country, let category = categories?.first else { return }
         delegate?.loaderIsHidden(false)
-        headlineRepo.fetchSearchData(searchText, page: 1, country: country, categories: categories) { [weak self] result in
+        headlineRepo.fetchSearchData(searchText, page: 1, country: country, category: category) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):

@@ -10,96 +10,33 @@ import Foundation
 class HeadlineDataRepo: HeadlineRepoProtocol {
     
     let pageSize = 20
-    private var dispatchGroup = DispatchGroup()
-    private var isSameDataFlag: Bool = false
-    private var tempArticles: [Article] = []
     
     private var articlesData: APIResponse<[Article]> = APIResponse(page: nil, totalResults: nil, articles: [], status: nil)
     
-    
-    func fetchData(country: String, categories: [String], completion: ((Result<APIResponse<[Article]>, APIError>)->())?) {
-        
-        setupDataSource()
-        let page = (articlesData.page ?? 0) + 1
-        if page == 1 {
-            completion?(.success(articlesData))
-        }
-        
-        dispatchGroup = DispatchGroup()
-        tempArticles = []
-        categories.forEach { category in
-            dispatchGroup.enter()
-            fetchArticles(page: page, pageSize: pageSize, country: country, category: category) { [weak self] response in
-                guard let self = self else { return }
-                dispatchGroup.leave()
-                switch response {
-                case .success(_): break
-                case .failure(let error):
-                    completion?(.failure(error))
-                }
-            }
-        }
-        handleDispatchGroupNotification(page: page, country: country, categories: categories) { response in
-            completion?(response)
-        }
-    }
-    
-    func fetchSearchData(_ searchText: String, page: Int, country: String, categories: [String], completion: ((Result<APIResponse<[Article]>, APIError>)->())?) {
-    
-        dispatchGroup = DispatchGroup()
-        tempArticles = []
-        categories.forEach { category in
-            dispatchGroup.enter()
-            fetchSearchResultWith(searchText, page: page, pageSize: pageSize, country: country, category: category) { [weak self] response in
-                guard let self = self else { return }
-                dispatchGroup.leave()
-                switch response {
-                case .success(_): break
-                case .failure(let error):
-                    completion?(.failure(error))
-                }
-            }
-        }
-        handleSearchDispatchGroup(page: page, completion: completion)
-    }
-    
     private func setupDataSource() {
         articlesData.articles = getCashedData()
-        articlesData.totalResults = articlesData.articles.count
-//        articlesData.page = articlesData.totalResults! / (pageSize * 3) /// 3 apis are called and each give 20 record (page size)
+        let count = articlesData.articles.count
+        articlesData.page = count / pageSize
     }
     
-    private func handleDispatchGroupNotification(page: Int, country: String, categories: [String], completion: ((Result<APIResponse<[Article]>, APIError>)->())?) {
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            guard let self = self else { return }
-            if (tempArticles.first?.url == articlesData.articles.first?.url || isSameDataFlag), page == 1 {
-                isSameDataFlag = false
-                articlesData.page = 1
-                fetchData(country: country, categories: categories, completion: nil)
-            }else if page == 1 {
-                deleteAllRecords()
-                casheArticles(articles: tempArticles)
-                setupDataSource()
-                articlesData.page = 1
-                completion?(.success(articlesData))
-            }else{
-                casheArticles(articles: tempArticles)
-                articlesData.page = page
-                completion?(.success(articlesData))
-            }
-        }
-    }
-    
-    private func handleSearchDispatchGroup(page: Int, completion: ((Result<APIResponse<[Article]>, APIError>)->())?) {
-        dispatchGroup.notify(queue: .main){ [weak self] in
-            guard let self = self else { return }
-            articlesData.page = page
-            if page == 1 {
-                articlesData.articles = tempArticles
-            }else{
-                articlesData.articles.append(contentsOf: tempArticles)
-            }
+    func fetchData(country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>)->())?) {
+        
+        var page: Int!
+        if articlesData.articles.isEmpty {
+            setupDataSource()
+            page = 1
             completion?(.success(articlesData))
+        }else{
+            setupDataSource()
+            page = (articlesData.page ?? 0) + 1
+        }
+        
+        if let totalResult = articlesData.totalResults, articlesData.articles.count == totalResult {
+            return
+        }
+        
+        fetchArticles(page: page, pageSize: pageSize, country: country, category: category) { response in
+            completion?(response)
         }
     }
     
@@ -108,9 +45,7 @@ class HeadlineDataRepo: HeadlineRepoProtocol {
             guard let self = self else { return}
             switch response {
             case .success(let data):
-                if articlesData.articles.contains(where: { $0.url == data.articles.first?.url }) {
-                    isSameDataFlag = true
-                }
+                articlesData.totalResults = data.totalResults
                 
                 var tempData = data.articles
                 for i in 0..<tempData.count {
@@ -119,11 +54,24 @@ class HeadlineDataRepo: HeadlineRepoProtocol {
                         tempData[i].date = date
                     }
                 }
-                tempArticles.append(contentsOf: tempData)
                 
-            case .failure(_): break
+                if data.articles.first?.url == articlesData.articles.first?.url, page == 1 {
+                    fetchData(country: country, category: category, completion: nil)
+                }else if page == 1 {
+                    deleteAllRecords()
+                    casheArticles(articles: tempData)
+                    setupDataSource()
+                    completion?(.success(articlesData))
+                    
+                }else{
+                    casheArticles(articles: tempData)
+                    completion?(.success(articlesData))
+                }
+                
+                
+            case .failure(let error):
+                completion?(.failure(error))
             }
-            completion?(response)
         }
     }
     
@@ -140,6 +88,12 @@ class HeadlineDataRepo: HeadlineRepoProtocol {
         return newDate
     }
     
+    func fetchSearchData(_ searchText: String, page: Int, country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>)->())?) {
+        
+        fetchSearchResultWith(searchText, page: page, pageSize: pageSize, country: country, category: category) { response in
+           completion?(response)
+        }
+    }
     func fetchSearchResultWith(_ searchText: String, page: Int, pageSize: Int, country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>)->())?) {
         
         APIRoute.shared.fetchRequest(clientRequest: .Search(searchText: searchText,category: category, page: page, pageSize: pageSize), decodingModel: APIResponse<[Article]>.self) { [weak self] response in
@@ -153,7 +107,14 @@ class HeadlineDataRepo: HeadlineRepoProtocol {
                         tempData[i].date = date
                     }
                 }
-                tempArticles.append(contentsOf: tempData)
+                
+                articlesData.page = page
+                if page == 1 {
+                    articlesData.articles = tempData
+                }else{
+                    articlesData.articles.append(contentsOf: tempData)
+                }
+                completion?(.success(articlesData))
                 
             case .failure(let error):
                 completion?(.failure(error))

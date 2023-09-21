@@ -56,10 +56,8 @@ extension CollectionSetCollectionViewCell: UICollectionViewDelegate, UICollectio
             cell.setCountryTitle(Categories.allCases[indexPath.row].rawValue)
             cell.typeSelected = { [weak self] in
                 guard let self = self else { return}
-                self.cats.append(Categories.allCases[indexPath.row])
-                if self.cats.count == 3{
-                    self.categoriesSelected?(self.cats)
-                }
+                cats.append(Categories.allCases[indexPath.row])
+                categoriesSelected?(cats)
             }
         }
         return cell
