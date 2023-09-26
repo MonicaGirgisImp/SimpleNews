@@ -88,11 +88,11 @@ final class HeadlineDataRepoTest: XCTestCase {
         XCTAssertEqual(actualResult, [])
     }
     
-//    func testCasheArticles_WithValidParamters_ShouldReturnData() {
-//        headlinesRepo.casheArticles(articles: [testArticleModel])
-//        let actualResult = headlinesRepo.getCashedData()
-//        XCTAssertEqual(actualResult, [testArticleModel])
-//    }
+    func testCasheArticles_WithValidParamters_ShouldReturnData() {
+        headlinesRepo.casheArticles(articles: [testArticleModel])
+        let actualResult = headlinesRepo.getCashedData()
+        XCTAssertEqual(actualResult, [testArticleModel])
+    }
     
     func testCasheArticles_WithInValidParamters_ShouldReturnEmpty() {
         headlinesRepo.casheArticles(articles: [])
@@ -101,6 +101,7 @@ final class HeadlineDataRepoTest: XCTestCase {
     }
     
     func testGetCashedData_WithCashedData_ShouldReturnData() {
+        headlinesRepo.casheArticles(articles: [testArticleModel])
         let actualResult = headlinesRepo.getCashedData()
         XCTAssertEqual(actualResult, [testArticleModel])
     }

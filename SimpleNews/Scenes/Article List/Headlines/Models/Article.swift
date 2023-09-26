@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Article
 struct Article: Equatable, Codable {
     static func == (lhs: Article, rhs: Article) -> Bool {
-        return lhs == rhs
+        return lhs.url == rhs.url
     }
     
     var category: String?
