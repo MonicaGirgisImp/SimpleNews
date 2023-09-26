@@ -82,7 +82,7 @@ extension HeadlinesViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard indexPath.row == viewModel.articlesData.articles.count - 10 else { return }
+        guard indexPath.row == viewModel.articlesData.articles.count - 5 else { return }
         viewModel.getNextPage()
     }
     

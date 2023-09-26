@@ -17,47 +17,61 @@ enum ResultState {
 final class FakeHeadlineRepo: HeadlineRepoProtocol {
     
     var testCaseState: ResultState = .success
-    let successModdel = APIResponse(totalResults: 1, articles: [Article(category: "categoory", source: Source(id: "id", name: "name"), author: "authtor", title: "title", articleDescription: "description", url: "url", urlToImage: "url", publishedAt: "published", date: Date(), content: "content", isSaved: false)], status: "success")
+    var successModel = APIResponse(totalResults: 1, articles: [Article(category: "categoory", source: Source(id: "id", name: "name"), author: "authtor", title: "title", articleDescription: "description", url: "url", urlToImage: "url", publishedAt: "published", date: Date(), content: "content", isSaved: false)], status: "success")
     
     func setTestCaseState(testCaseState: ResultState) {
         self.testCaseState = testCaseState
     }
     
-    func fetchData(country: String, categories: [String], completion: ((Result<APIResponse<[Article]>, APIError>) -> ())?) {
-        
+    func fetchData(country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>) -> ())?) {
+        switch testCaseState {
+        case .success:
+            completion?(.success(successModel))
+        case .fail:
+            completion?(.failure(.responseUnsuccessful))
+            
+        }
     }
     
     func fetchArticles(page: Int, pageSize: Int, country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>) -> ())?) {
         switch testCaseState {
         case .success:
-            completion?(.success(successModdel))
+            completion?(.success(successModel))
         case .fail:
             completion?(.failure(.responseUnsuccessful))
+            
+        }
+    }
+    
+    func fetchSearchData(_ searchText: String, page: Int, country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>) -> ())?) {
+        switch testCaseState {
+        case .success:
+            completion?(.success(successModel))
+        case .fail:
+            completion?(.failure(.responseUnsuccessful))
+            
         }
     }
     
     func fetchSearchResultWith(_ searchText: String, page: Int, pageSize: Int, country: String, category: String, completion: ((Result<APIResponse<[Article]>, APIError>) -> ())?) {
         switch testCaseState {
         case .success:
-            completion?(.success(successModdel))
+            completion?(.success(successModel))
         case .fail:
             completion?(.failure(.responseUnsuccessful))
+            
         }
     }
     
-    func fetchSearchData(_ searchText: String, page: Int, country: String, categories: [String], completion: ((Result<APIResponse<[Article]>, APIError>) -> ())?) {
-        
-    }
-    
     func getCashedData() -> [Article] {
-        return successModdel.articles
+        return successModel.articles
     }
     
     func casheArticles(articles: [Article]) {
-//        successModdel.articles = articles
+        successModel.articles = articles
     }
     
     func deleteAllRecords() {
-        
+        successModel.articles = []
     }
 }

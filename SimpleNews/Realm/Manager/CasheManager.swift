@@ -35,8 +35,8 @@ class CasheManager: CasheManagerProtocol {
         }
     }
     
-    func getCashedObjects<T: Object>(_ model: T.Type) -> Results<T> {
-        return realm.objects(T.self)
+    func getCashedObjects<T: Object>(_ model: T.Type) -> [T] {
+        return realm.objects(T.self).toArray(ofType: T.self)
     }
     func getCashedObject<T: Object>(_ model: T.Type, with primaryKey: Any) -> T? {
         return realm.object(ofType: T.self, forPrimaryKey: primaryKey)
@@ -70,5 +70,18 @@ class CasheManager: CasheManagerProtocol {
     
     func resetRealm() {
         realm = try! Realm()
+    }
+}
+
+extension Results {
+    func toArray<T>(ofType: T.Type) -> [T] {
+        var array = [T]()
+        for i in 0 ..< count {
+            if let result = self[i] as? T {
+                array.append(result)
+            }
+        }
+
+        return array
     }
 }

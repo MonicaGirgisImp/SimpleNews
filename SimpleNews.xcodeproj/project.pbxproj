@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		66966CA52AB5AF4700870309 /* FakeBookmarksDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66966CA42AB5AF4700870309 /* FakeBookmarksDataRepo.swift */; };
 		66966CA72AB5AF8B00870309 /* BookmarksViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66966CA62AB5AF8B00870309 /* BookmarksViewModelTest.swift */; };
+		66A7C2362AC2DC4300FA8680 /* HeadlineDataRepoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7C2352AC2DC4300FA8680 /* HeadlineDataRepoTest.swift */; };
+		66A7C2382AC2DE1500FA8680 /* FakeCasheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7C2372AC2DE1500FA8680 /* FakeCasheManager.swift */; };
+		66A7C23B2AC30FE300FA8680 /* FakeAPIRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7C23A2AC30FE300FA8680 /* FakeAPIRoute.swift */; };
 		66BAD2CF2AA873A600EA1C6E /* CasheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2CE2AA873A600EA1C6E /* CasheManager.swift */; };
 		66BAD2D22AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2D12AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift */; };
 		66BAD2D62AA87C3900EA1C6E /* BookmarksRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */; };
@@ -84,6 +87,9 @@
 /* Begin PBXFileReference section */
 		66966CA42AB5AF4700870309 /* FakeBookmarksDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBookmarksDataRepo.swift; sourceTree = "<group>"; };
 		66966CA62AB5AF8B00870309 /* BookmarksViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewModelTest.swift; sourceTree = "<group>"; };
+		66A7C2352AC2DC4300FA8680 /* HeadlineDataRepoTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineDataRepoTest.swift; sourceTree = "<group>"; };
+		66A7C2372AC2DE1500FA8680 /* FakeCasheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeCasheManager.swift; sourceTree = "<group>"; };
+		66A7C23A2AC30FE300FA8680 /* FakeAPIRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAPIRoute.swift; sourceTree = "<group>"; };
 		66BAD2CE2AA873A600EA1C6E /* CasheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasheManager.swift; sourceTree = "<group>"; };
 		66BAD2D12AA87ADC00EA1C6E /* HeadlineRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineRepoProtocol.swift; sourceTree = "<group>"; };
 		66BAD2D52AA87C3900EA1C6E /* BookmarksRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksRepoProtocol.swift; sourceTree = "<group>"; };
@@ -176,6 +182,14 @@
 			path = Bookmarks;
 			sourceTree = "<group>";
 		};
+		66A7C2392AC30FBE00FA8680 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				66A7C23A2AC30FE300FA8680 /* FakeAPIRoute.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		66BAD2D02AA87AB300EA1C6E /* Repo Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				66C918142AB849FC00A31C9F /* CasheManagerTest.swift */,
+				66A7C2372AC2DE1500FA8680 /* FakeCasheManager.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -229,6 +244,7 @@
 		C50EA6942A794EEA008E595D /* SimpleNewsTests */ = {
 			isa = PBXGroup;
 			children = (
+				66A7C2392AC30FBE00FA8680 /* Network */,
 				66C918132AB8493D00A31C9F /* Realm */,
 				66966CA32AB5AF1F00870309 /* Bookmarks */,
 				C50EA6A52A796861008E595D /* Headline */,
@@ -241,6 +257,7 @@
 			children = (
 				C50EA69E2A796228008E595D /* FakeHeadlineRepo.swift */,
 				C50EA6A02A7962DE008E595D /* HeadlineViewModelTest.swift */,
+				66A7C2352AC2DC4300FA8680 /* HeadlineDataRepoTest.swift */,
 			);
 			path = Headline;
 			sourceTree = "<group>";
@@ -743,7 +760,10 @@
 				66C918152AB849FC00A31C9F /* CasheManagerTest.swift in Sources */,
 				66966CA52AB5AF4700870309 /* FakeBookmarksDataRepo.swift in Sources */,
 				66966CA72AB5AF8B00870309 /* BookmarksViewModelTest.swift in Sources */,
+				66A7C2362AC2DC4300FA8680 /* HeadlineDataRepoTest.swift in Sources */,
+				66A7C23B2AC30FE300FA8680 /* FakeAPIRoute.swift in Sources */,
 				C50EA69F2A796228008E595D /* FakeHeadlineRepo.swift in Sources */,
+				66A7C2382AC2DE1500FA8680 /* FakeCasheManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
