@@ -6,13 +6,13 @@
 //
 
 import Foundation
+import Combine
 
 class BookmarksViewModel {
     
-    private (set) var bookmarks: [Article] = []
     private let bookmarksRepo: BookmarksRepoProtocol!
     
-    
+    var bookmarksData: CurrentValueSubject<[Article], Never> = .init([])
     var delegate: ViewModelDelegates?
     
     init(bookmarksRepo: BookmarksRepoProtocol) {
@@ -23,13 +23,13 @@ class BookmarksViewModel {
     func handleRepo() {
         bookmarksRepo.getCashedData { [weak self] articles in
             guard let self = self else { return }
-            bookmarks = articles
+            bookmarksData.value = articles
             delegate?.autoUpdateView()
         }
     }
     
     func unmarkAllArticles() {
-        bookmarks.removeAll()
+        bookmarksData.value.removeAll()
         let articles = CasheManager.shared.getCashedObjects(ArticleDB.self).filter({ $0.isSaved == true })
         articles.forEach { articleDB in
             if let url = articleDB.url {
@@ -43,9 +43,9 @@ class BookmarksViewModel {
     }
     
     func unmarkArticle(at index: Int) {
-        guard index >= 0, index < bookmarks.count else { return }
-        let bookmark = bookmarks[index]
-        bookmarks.remove(at: index)
+        guard index >= 0, index < bookmarksData.value.count else { return }
+        let bookmark = bookmarksData.value[index]
+        bookmarksData.value.remove(at: index)
         if let primaryKey = bookmark.url {
             CasheManager.shared.updateCashedObj(ArticleDB.self, with: primaryKey) { obj in
                 obj.isSaved = !obj.isSaved

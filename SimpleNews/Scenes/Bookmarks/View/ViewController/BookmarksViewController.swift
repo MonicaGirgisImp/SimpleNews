@@ -37,12 +37,12 @@ class BookmarksViewController: UIViewController {
 //MARK:- UITableViewDelegate, UITableViewDataSource
 extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.bookmarks.count
+        return viewModel.bookmarksData.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ArticleTableViewCell.self), for: indexPath) as! ArticleTableViewCell
-        cell.setData(article: viewModel.bookmarks[indexPath.row])
+        cell.setData(article: viewModel.bookmarksData.value[indexPath.row])
         
         cell.saveLater = { [weak self] in
             guard let self = self else { return}
@@ -57,6 +57,6 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showDetails", sender: viewModel.bookmarks[indexPath.row])
+        performSegue(withIdentifier: "showDetails", sender: viewModel.bookmarksData.value[indexPath.row])
     }
 }
