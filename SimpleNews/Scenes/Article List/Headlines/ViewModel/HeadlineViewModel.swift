@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class HeadlinesViewModel {
     
@@ -15,8 +16,9 @@ class HeadlinesViewModel {
     
     private var didGetNextPage = false
     
-    private (set) var articlesData: APIResponse<[Article]> = APIResponse(page: nil, totalResults: nil, articles: [], status: nil)
+    private var articlesData: APIResponse<[Article]> = APIResponse(page: nil, totalResults: nil, articles: [], status: nil)
     
+    var articles: CurrentValueSubject<[Article] , Never> = .init([])
     var delegate: ViewModelDelegates?
     
     init(headlineRepo: HeadlineRepoProtocol) {
@@ -32,6 +34,7 @@ class HeadlinesViewModel {
             switch response {
             case .success(let data):
                 articlesData = data
+                articles.value = data.articles
                 delegate?.autoUpdateView()
             case .failure(let error):
                 delegate?.failedWithError(error.localizedDescription)
@@ -39,17 +42,17 @@ class HeadlinesViewModel {
         })
     }
     
-    private func settingUpDataSource(newData: APIResponse<[Article]>) {
-        if newData.page == 1 {
-            articlesData = newData
-            delegate?.autoUpdateView()
-        }else{
-            let initialIndex = articlesData.articles.count - 1
-            articlesData.articles.append(contentsOf: newData.articles)
-            let endIndex = articlesData.articles.count - 1
-            delegate?.insertNewRows(initialIndex, endIndex, 0)
-        }
-    }
+//    private func settingUpDataSource(newData: APIResponse<[Article]>) {
+//        if newData.page == 1 {
+//            articlesData = newData
+//            delegate?.autoUpdateView()
+//        }else{
+//            let initialIndex = articlesData.articles.count - 1
+//            articlesData.articles.append(contentsOf: newData.articles)
+//            let endIndex = articlesData.articles.count - 1
+//            delegate?.insertNewRows(initialIndex, endIndex, 0)
+//        }
+//    }
     
     func getNextPage() {
         guard Network.reachability.isReachable, !didGetNextPage else { return }

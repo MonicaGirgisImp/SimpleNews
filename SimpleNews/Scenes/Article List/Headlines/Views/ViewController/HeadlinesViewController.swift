@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class HeadlinesViewController: UIViewController {
     
@@ -19,6 +20,7 @@ class HeadlinesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
         viewModel = HeadlinesViewModel(headlineRepo: HeadlineDataRepo())
         viewModel.delegate = self
@@ -66,12 +68,12 @@ class HeadlinesViewController: UIViewController {
 //MARK:- UITableViewDelegate, UITableViewDataSource
 extension HeadlinesViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.articlesData.articles.count
+        return viewModel.articles.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ArticleTableViewCell.self), for: indexPath) as! ArticleTableViewCell
-        cell.setData(article: viewModel.articlesData.articles[indexPath.row])
+        cell.setData(article: viewModel.articles.value[indexPath.row])
         
         cell.saveLater = { [weak self] in
             guard let self = self else { return}
@@ -82,12 +84,12 @@ extension HeadlinesViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard indexPath.row == viewModel.articlesData.articles.count - 5 else { return }
+        guard indexPath.row == viewModel.articles.value.count - 5 else { return }
         viewModel.getNextPage()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showDetails", sender: viewModel.articlesData.articles[indexPath.row])
+        performSegue(withIdentifier: "showDetails", sender: viewModel.articles.value[indexPath.row])
     }
 }
 

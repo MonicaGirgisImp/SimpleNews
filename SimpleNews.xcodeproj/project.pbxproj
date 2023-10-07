@@ -487,8 +487,8 @@
 		C5B7B301278983C900505808 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				C5394C372A77D19300D39EE3 /* Article List */,
 				C55CB49D2A77B0F6006FE782 /* Protocols */,
+				C5394C372A77D19300D39EE3 /* Article List */,
 				C5A824AE278B742700297500 /* Bookmarks */,
 				C5B7B30827899D6F00505808 /* Onboarding */,
 			);
