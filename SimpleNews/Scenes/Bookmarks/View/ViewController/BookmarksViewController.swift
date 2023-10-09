@@ -19,6 +19,7 @@ class BookmarksViewController: UIViewController {
         super.viewDidLoad()
 
         setupUI()
+        bindAutoUpdateView()
         viewModel.handleRepo()
     }
     

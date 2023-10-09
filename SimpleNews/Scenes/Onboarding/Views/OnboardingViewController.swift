@@ -27,6 +27,7 @@ class OnboardingViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        bindAutoUpdateView()
     }
     
     private func setupUI(){
