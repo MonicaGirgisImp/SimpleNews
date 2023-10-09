@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class ArticleDetailsViewController: UIViewController {
     
@@ -19,13 +20,14 @@ class ArticleDetailsViewController: UIViewController {
     @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     
+    private var cancelable = Set<AnyCancellable>()
     var viewModel = ArticleDetailsViewModel(article: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        viewModel?.delegate = self
         setupUI()
+        bindAutoUpdateView()
         setData()
     }
     
@@ -58,17 +60,13 @@ class ArticleDetailsViewController: UIViewController {
     }
 }
 
-extension ArticleDetailsViewController: ViewModelDelegates {
-    func autoUpdateView() {
-        setData()
-    }
-    
-    func failedWithError(_ err: String) {
-    }
-    
-    func loaderIsHidden(_ isHidden: Bool) {
-    }
-    
-    func insertNewRows(_ initialIndex: Int, _ endIndex: Int, _ section: Int) {
+extension ArticleDetailsViewController {
+    private func bindAutoUpdateView() {
+        viewModel.autoUpdateView
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+               setData()
+            }.store(in: &cancelable)
     }
 }

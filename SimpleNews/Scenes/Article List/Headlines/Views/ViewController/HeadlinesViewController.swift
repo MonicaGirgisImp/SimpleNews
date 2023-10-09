@@ -15,15 +15,19 @@ class HeadlinesViewController: UIViewController {
     
     private var refreshControl = UIRefreshControl()
     private var isFirstRefresh: Bool = true
+    private var cancelable = Set<AnyCancellable>()
     
     var viewModel: HeadlinesViewModel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         viewModel = HeadlinesViewModel(headlineRepo: HeadlineDataRepo())
-        viewModel.delegate = self
+        bindShowLoader()
+        bindAutoUpdateView()
+        bindFailureWithError()
         viewModel.fetchData()
     }
     
@@ -113,34 +117,35 @@ extension HeadlinesViewController: UISearchBarDelegate{
     }
 }
 
-extension HeadlinesViewController: ViewModelDelegates {
-    func autoUpdateView() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return}
-            articlesTableView.reloadData()
-        }
+extension HeadlinesViewController {
+    private func bindShowLoader() {
+        viewModel.showLoader
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isShowen in
+                guard let self = self else { return }
+                if isShowen {
+                    Spinner.showSpinner()
+                }else{
+                    Spinner.hideSpinner()
+                }
+            }.store(in: &cancelable)
     }
     
-    func failedWithError(_ err: String) {
-        showAlert(message: err)
+    private func bindFailureWithError() {
+        viewModel.failedWithError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+            guard let self = self else { return }
+            showAlert(message: error)
+            }.store(in: &cancelable)
     }
     
-    func loaderIsHidden(_ isHidden: Bool) {
-        handleRefreshControl(!isHidden)
-        if isHidden {
-            Spinner.hideSpinner()
-        }else{
-            Spinner.showSpinner()
-        }
-    }
-    
-    func insertNewRows(_ initialIndex: Int, _ endIndex: Int, _ section: Int) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return}
-            let indicies = (initialIndex..<endIndex).map({ IndexPath(row: $0, section: 0) })
-            articlesTableView.beginUpdates()
-            articlesTableView.insertRows(at: indicies, with: .automatic)
-            articlesTableView.endUpdates()
-        }
+    private func bindAutoUpdateView() {
+        viewModel.autoUpdateView
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                articlesTableView.reloadData()
+            }.store(in: &cancelable)
     }
 }

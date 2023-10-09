@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		667682BC2AD3E8AD00AACB7D /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667682BB2AD3E8AD00AACB7D /* BaseViewModel.swift */; };
 		66966CA52AB5AF4700870309 /* FakeBookmarksDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66966CA42AB5AF4700870309 /* FakeBookmarksDataRepo.swift */; };
 		66966CA72AB5AF8B00870309 /* BookmarksViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66966CA62AB5AF8B00870309 /* BookmarksViewModelTest.swift */; };
 		66A7C2362AC2DC4300FA8680 /* HeadlineDataRepoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7C2352AC2DC4300FA8680 /* HeadlineDataRepoTest.swift */; };
@@ -31,7 +32,6 @@
 		C5394C402A77DFAC00D39EE3 /* ArticleDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5394C3F2A77DFAC00D39EE3 /* ArticleDetailsViewController.swift */; };
 		C5394C422A78025E00D39EE3 /* UIImageView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5394C412A78025E00D39EE3 /* UIImageView + Extensions.swift */; };
 		C53AE8922A771309005FB75A /* HeadlineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53AE8912A771309005FB75A /* HeadlineViewModel.swift */; };
-		C55CB49F2A77B111006FE782 /* ViewModelDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55CB49E2A77B111006FE782 /* ViewModelDelegates.swift */; };
 		C5A824B0278B744B00297500 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A824AF278B744B00297500 /* BookmarksViewController.swift */; };
 		C5B7B2D92789833400505808 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B7B2D82789833400505808 /* AppDelegate.swift */; };
 		C5B7B2E02789833400505808 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5B7B2DE2789833400505808 /* Main.storyboard */; };
@@ -85,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		667682BB2AD3E8AD00AACB7D /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		66966CA42AB5AF4700870309 /* FakeBookmarksDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBookmarksDataRepo.swift; sourceTree = "<group>"; };
 		66966CA62AB5AF8B00870309 /* BookmarksViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewModelTest.swift; sourceTree = "<group>"; };
 		66A7C2352AC2DC4300FA8680 /* HeadlineDataRepoTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineDataRepoTest.swift; sourceTree = "<group>"; };
@@ -109,7 +110,6 @@
 		C5394C3F2A77DFAC00D39EE3 /* ArticleDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailsViewController.swift; sourceTree = "<group>"; };
 		C5394C412A78025E00D39EE3 /* UIImageView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extensions.swift"; sourceTree = "<group>"; };
 		C53AE8912A771309005FB75A /* HeadlineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineViewModel.swift; sourceTree = "<group>"; };
-		C55CB49E2A77B111006FE782 /* ViewModelDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDelegates.swift; sourceTree = "<group>"; };
 		C5A824AF278B744B00297500 /* BookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		C5B7B2D52789833400505808 /* SimpleNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5B7B2D82789833400505808 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +173,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		667682BA2AD3E89500AACB7D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				667682BB2AD3E8AD00AACB7D /* BaseViewModel.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		66966CA32AB5AF1F00870309 /* Bookmarks */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +280,7 @@
 		C5394C272A77B4B800D39EE3 /* Helper tools */ = {
 			isa = PBXGroup;
 			children = (
+				667682BA2AD3E89500AACB7D /* Base */,
 				C5FACC642A786CA00033B115 /* GIF Image */,
 				C5394C2C2A77C35600D39EE3 /* Spinner */,
 			);
@@ -392,14 +401,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		C55CB49D2A77B0F6006FE782 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				C55CB49E2A77B111006FE782 /* ViewModelDelegates.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		C5A824AE278B742700297500 /* Bookmarks */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,7 +488,6 @@
 		C5B7B301278983C900505808 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				C55CB49D2A77B0F6006FE782 /* Protocols */,
 				C5394C372A77D19300D39EE3 /* Article List */,
 				C5A824AE278B742700297500 /* Bookmarks */,
 				C5B7B30827899D6F00505808 /* Onboarding */,
@@ -788,10 +788,10 @@
 				C50EA6A72A796E6D008E595D /* FetchHeadlineData.swift in Sources */,
 				C5B7B30E2789A33800505808 /* CountryCollectionViewCell.swift in Sources */,
 				C5B7B31C2789D81200505808 /* HeadlinesViewController.swift in Sources */,
+				667682BC2AD3E8AD00AACB7D /* BaseViewModel.swift in Sources */,
 				C5394C302A77C36500D39EE3 /* SpinnerView.swift in Sources */,
 				C5B7B2F22789837700505808 /* SimpleNews.swift in Sources */,
 				C5B7B3162789CAB500505808 /* StartNewsCollectionViewCell.swift in Sources */,
-				C55CB49F2A77B111006FE782 /* ViewModelDelegates.swift in Sources */,
 				C5394C292A77BC6100D39EE3 /* Reachability.swift in Sources */,
 				66C918122AB8481400A31C9F /* CasheManagerProtocol.swift in Sources */,
 				66FFFC4F2ABAEC0700353294 /* APIProtocol.swift in Sources */,

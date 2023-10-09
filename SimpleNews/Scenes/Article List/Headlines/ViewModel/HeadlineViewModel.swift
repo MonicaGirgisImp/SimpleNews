@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class HeadlinesViewModel {
+class HeadlinesViewModel: BaseViewModel {
     
     let country = UserManager.shared.getSelectedCountry()
     let categories = UserManager.shared.getSelectedCategories()
@@ -19,7 +19,6 @@ class HeadlinesViewModel {
     private var articlesData: APIResponse<[Article]> = APIResponse(page: nil, totalResults: nil, articles: [], status: nil)
     
     var articles: CurrentValueSubject<[Article] , Never> = .init([])
-    var delegate: ViewModelDelegates?
     
     init(headlineRepo: HeadlineRepoProtocol) {
         self.headlineRepo = headlineRepo
@@ -35,9 +34,9 @@ class HeadlinesViewModel {
             case .success(let data):
                 articlesData = data
                 articles.value = data.articles
-                delegate?.autoUpdateView()
+                autoUpdateView.send(())
             case .failure(let error):
-                delegate?.failedWithError(error.localizedDescription)
+                failedWithError.send(error.localizedDescription)
             }
         })
     }
@@ -66,15 +65,15 @@ class HeadlinesViewModel {
     
     func searchArticles(with searchText: String, completion: ((Result<APIResponse<[Article]>, APIError>)->())? = nil) {
         guard let country = country, let category = categories?.first else { return }
-        delegate?.loaderIsHidden(false)
+        showLoader.send(true)
         headlineRepo.fetchSearchData(searchText, page: 1, country: country, category: category) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
                 articlesData = data
-                delegate?.autoUpdateView()
+                autoUpdateView.send(())
             case .failure(let error):
-                delegate?.failedWithError(error.localizedDescription)
+                failedWithError.send(error.localizedDescription)
             }
         }
     }

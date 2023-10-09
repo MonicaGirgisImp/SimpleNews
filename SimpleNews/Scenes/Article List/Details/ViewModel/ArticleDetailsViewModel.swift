@@ -7,13 +7,14 @@
 
 import Foundation
 
-class ArticleDetailsViewModel {
+class ArticleDetailsViewModel: BaseViewModel {
     
     private (set) var article: Article?
-    var delegate: ViewModelDelegates?
     
     init(article: Article?) {
+        super.init()
+        
         self.article = article
-        delegate?.autoUpdateView()
+        autoUpdateView.send(())
     }
 }

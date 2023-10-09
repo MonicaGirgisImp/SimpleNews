@@ -7,7 +7,7 @@
 
 import Foundation
 
-class OnboardingViewModel {
+class OnboardingViewModel: BaseViewModel {
     
     private (set) var selectedCountry: Countries?
     private (set) var selectedCategories: [Categories] = []
@@ -15,12 +15,10 @@ class OnboardingViewModel {
     private (set) var currentPage: Int = 0{
         didSet{
             if currentPage == 2 {
-                delegate?.autoUpdateView()
+                autoUpdateView.send(())
             }
         }
     }
-    
-    var delegate: ViewModelDelegates?
     
     func setCurrentPage(_ page: Int) {
         currentPage = page

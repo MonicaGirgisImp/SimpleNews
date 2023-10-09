@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class OnboardingViewController: UIViewController {
     
@@ -19,13 +20,13 @@ class OnboardingViewController: UIViewController {
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var pageController: UIPageControl!
     
+    private var cancelable = Set<AnyCancellable>()
     var viewModel = OnboardingViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        viewModel.delegate = self
     }
     
     private func setupUI(){
@@ -90,19 +91,15 @@ extension OnboardingViewController: UICollectionViewDelegate, UICollectionViewDa
     }
 }
 
-extension OnboardingViewController: ViewModelDelegates {
-    func autoUpdateView() {
-        if viewModel.currentPage == 2 {
-            nextBtn.isEnabled(true)
-        }
-    }
-    
-    func failedWithError(_ err: String) {
-    }
-    
-    func loaderIsHidden(_ isHidden: Bool) {
-    }
-    
-    func insertNewRows(_ initialIndex: Int, _ endIndex: Int, _ section: Int) {
+extension OnboardingViewController {
+    private func bindAutoUpdateView() {
+        viewModel.autoUpdateView
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                if viewModel.currentPage == 2 {
+                    nextBtn.isEnabled(true)
+                }
+            }.store(in: &cancelable)
     }
 }

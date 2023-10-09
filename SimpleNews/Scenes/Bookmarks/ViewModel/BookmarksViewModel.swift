@@ -8,23 +8,21 @@
 import Foundation
 import Combine
 
-class BookmarksViewModel {
+class BookmarksViewModel: BaseViewModel {
     
     private let bookmarksRepo: BookmarksRepoProtocol!
     
     var bookmarksData: CurrentValueSubject<[Article], Never> = .init([])
-    var delegate: ViewModelDelegates?
     
     init(bookmarksRepo: BookmarksRepoProtocol) {
         self.bookmarksRepo = bookmarksRepo
-       handleRepo()
     }
     
     func handleRepo() {
         bookmarksRepo.getCashedData { [weak self] articles in
             guard let self = self else { return }
             bookmarksData.value = articles
-            delegate?.autoUpdateView()
+            autoUpdateView.send(())
         }
     }
     
@@ -39,7 +37,7 @@ class BookmarksViewModel {
             }
             
         }
-        delegate?.autoUpdateView()
+        autoUpdateView.send(())
     }
     
     func unmarkArticle(at index: Int) {
@@ -51,6 +49,6 @@ class BookmarksViewModel {
                 obj.isSaved = !obj.isSaved
             }
         }
-        delegate?.autoUpdateView()
+        autoUpdateView.send(())
     }
 }

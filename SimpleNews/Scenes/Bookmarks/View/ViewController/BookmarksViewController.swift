@@ -6,17 +6,20 @@
 //
 
 import UIKit
+import Combine
 
 class BookmarksViewController: UIViewController {
 
     @IBOutlet weak var bookmarksTableView: UITableView!
     
+    private var cancelable = Set<AnyCancellable>()
     var viewModel = BookmarksViewModel(bookmarksRepo: FetchBookmarksData())
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUI()
+        viewModel.handleRepo()
     }
     
     private func setupUI(){
@@ -58,5 +61,16 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showDetails", sender: viewModel.bookmarksData.value[indexPath.row])
+    }
+}
+
+extension BookmarksViewController{
+    private func bindAutoUpdateView() {
+        viewModel.autoUpdateView
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                bookmarksTableView.reloadData()
+            }.store(in: &cancelable)
     }
 }
